@@ -2,4 +2,5 @@
     <string name="app_name">AudioClean</string>
     <string name="start">START</string>
     <string name="stop">STOP</string>
+    <string name="clean_audio">Clean Audio</string>
 </resources>

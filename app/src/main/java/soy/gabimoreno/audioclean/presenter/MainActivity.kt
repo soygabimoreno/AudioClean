@@ -19,17 +19,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initUi()
+        initBtnPlayer()
+        initCbAudioProcessor()
     }
 
-    private fun initUi() {
+    private fun initBtnPlayer() {
         btnPlayer.setOnClickListener {
-            if (viewModel.isPlaying()) {
+            if (viewModel.isPlayingAudio()) {
                 btnPlayer.setText(R.string.start)
-                viewModel.stop()
+                viewModel.stopAudio()
             } else {
                 btnPlayer.setText(R.string.stop)
-                viewModel.start()
+                viewModel.playAudio()
+            }
+        }
+    }
+
+    private fun initCbAudioProcessor() {
+        cbCleanAudio.setOnClickListener {
+            if (cbCleanAudio.isChecked) {
+                viewModel.startProcessing()
+            } else {
+                viewModel.stopProcessing()
             }
         }
     }

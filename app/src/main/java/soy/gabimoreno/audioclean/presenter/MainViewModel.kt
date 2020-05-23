@@ -16,14 +16,22 @@ class MainViewModel(
         audioProcessor.init()
     }
 
-    fun isPlaying() = mediaPlayer.isPlaying()
+    fun isPlayingAudio() = mediaPlayer.isPlaying()
 
-    fun start() {
+    fun playAudio() {
         mediaPlayer.init(resId)
         mediaPlayer.start()
     }
 
-    fun stop() {
+    fun stopAudio() {
         mediaPlayer.stop()
+    }
+
+    fun startProcessing() {
+        audioProcessor.start()
+    }
+
+    fun stopProcessing() {
+        audioProcessor.stop()
     }
 }
