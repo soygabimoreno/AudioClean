@@ -13,6 +13,7 @@ class MainViewModel(
 
     init {
         mediaPlayer.init(resId)
+        audioProcessor.init()
     }
 
     fun isPlaying() = mediaPlayer.isPlaying()

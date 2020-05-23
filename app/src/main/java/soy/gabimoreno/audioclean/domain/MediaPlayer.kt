@@ -8,7 +8,7 @@ class MediaPlayer(private val context: Context) {
 
     private lateinit var mediaPlayer: MediaPlayer
 
-    private var sessionId = 0
+    var sessionId = 0
 
     fun init(@RawRes resId: Int) {
         mediaPlayer = MediaPlayer.create(context, resId)

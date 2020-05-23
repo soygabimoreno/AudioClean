@@ -11,7 +11,7 @@ import soy.gabimoreno.audioclean.presenter.MainViewModel
 
 val appModule = module {
     single { MediaPlayer(androidContext()) }
-    single { AudioProcessor() }
+    single { AudioProcessor(mediaPlayer = get()) }
     scope(named<MainActivity>()) {
         viewModel { (resId: Int) ->
             MainViewModel(
