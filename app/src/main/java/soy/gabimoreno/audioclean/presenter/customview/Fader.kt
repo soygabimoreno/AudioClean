@@ -2,6 +2,7 @@ package soy.gabimoreno.audioclean.presenter.customview
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.custom_fader.view.*
 import soy.gabimoreno.audioclean.R
@@ -12,11 +13,33 @@ class Fader @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    init {
-        inflateCustom(R.layout.custom_fader)
+    private lateinit var listener: Listener
+
+    interface Listener {
+        fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean)
     }
 
-    fun setDb(dB: Int) {
+    fun setListener(listener: Listener) {
+        this.listener = listener
+    }
+
+    init {
+        inflateCustom(R.layout.custom_fader)
+        sb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                listener.onProgressChanged(seekBar, progress, fromUser)
+                setDb(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
+    }
+
+    private fun setDb(dB: Int) {
         tv.text = "$dB dB"
     }
 }
