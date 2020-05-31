@@ -34,4 +34,8 @@ class MainViewModel(
     fun stopProcessing() {
         audioProcessor.stop()
     }
+
+    fun setVolume(gainDb: Int) {
+        // TODO
+    }
 }

@@ -1,14 +1,13 @@
 package soy.gabimoreno.audioclean.presenter
 
 import android.os.Bundle
-import android.widget.SeekBar
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 import soy.gabimoreno.audioclean.R
-import soy.gabimoreno.audioclean.presenter.customview.Fader
+import soy.gabimoreno.audioclean.presenter.customview.fader.Fader
 import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
@@ -49,9 +48,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFader() {
+        val fader = Fader(fv)
         fader.setListener(object : Fader.Listener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                // TODO
+            override fun onGainChanged(gainDb: Int) {
+                viewModel.setVolume(gainDb)
             }
         })
     }
