@@ -21,9 +21,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initBtnReset()
         initBtnPlayer()
         initCbAudioProcessor()
         initFaders()
+    }
+
+    private fun initBtnReset() {
+        btnReset.setOnClickListener {
+            viewModel.resetFaders()
+        }
     }
 
     private fun initBtnPlayer() {
@@ -54,11 +61,7 @@ class MainActivity : AppCompatActivity() {
             val faderView = FaderView(this)
             llFaderViews.addView(faderView)
             val fader = Fader(faderView, i, item)
-            fader.setListener(object : Fader.Listener {
-                override fun onGainChanged(i: Int, gain: Int) {
-                    viewModel.setVolume(i, gain)
-                }
-            })
+            viewModel.addFader(fader)
         }
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.RawRes
 import androidx.lifecycle.ViewModel
 import soy.gabimoreno.audioclean.domain.AudioProcessor
 import soy.gabimoreno.audioclean.domain.MediaPlayer
+import soy.gabimoreno.audioclean.presenter.customview.fader.Fader
 
 class MainViewModel(
     private val mediaPlayer: MediaPlayer,
@@ -15,6 +16,8 @@ class MainViewModel(
         mediaPlayer.init(resId)
         audioProcessor.init()
     }
+
+    private val faders = mutableListOf<Fader>()
 
     fun isPlayingAudio() = mediaPlayer.isPlaying()
 
@@ -41,5 +44,20 @@ class MainViewModel(
 
     fun setVolume(i: Int, gain: Int) {
         audioProcessor.setVolume(i, gain)
+    }
+
+    fun addFader(fader: Fader) {
+        faders.add(fader)
+        fader.setListener(object : Fader.Listener {
+            override fun onGainChanged(i: Int, gain: Int) {
+                setVolume(i, gain)
+            }
+        })
+    }
+
+    fun resetFaders() {
+        faders.forEach {
+            it.setGain(0)
+        }
     }
 }

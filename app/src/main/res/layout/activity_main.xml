@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".presenter.MainActivity">
 
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <LinearLayout
         android:id="@+id/llFaderViews"
         android:layout_width="0dp"
@@ -31,15 +41,15 @@
         android:layout_marginBottom="16dp"
         android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <CheckBox
         android:id="@+id/cbCleanAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="@string/clean_audio"
+        android:text="@string/enable_filter"
         app:layout_constraintBottom_toBottomOf="@id/btnPlayer"
-        app:layout_constraintEnd_toStartOf="@id/btnPlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnPlayer"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
