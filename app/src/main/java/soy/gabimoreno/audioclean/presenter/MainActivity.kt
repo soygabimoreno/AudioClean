@@ -48,10 +48,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFader() {
-        val fader = Fader(fv)
-        fader.setListener(object : Fader.Listener {
-            override fun onGainChanged(gainDb: Int) {
-                viewModel.setVolume(gainDb)
+        val frequencies = viewModel.getFrequencies()
+        val fader0 = Fader(fv0, frequencies[0])
+        fader0.setListener(object : Fader.Listener {
+            override fun onGainChanged(gain: Int) {
+                viewModel.setVolume(gain)
+            }
+        })
+        val fader1 = Fader(fv1, frequencies[1])
+        fader1.setListener(object : Fader.Listener {
+            override fun onGainChanged(gain: Int) {
+                viewModel.setVolume(gain)
             }
         })
     }

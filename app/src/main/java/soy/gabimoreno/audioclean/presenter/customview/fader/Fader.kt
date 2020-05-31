@@ -4,7 +4,10 @@ import android.widget.SeekBar
 import kotlinx.android.synthetic.main.custom_fader.view.*
 import soy.gabimoreno.audioclean.domain.ProgressDbMapper
 
-class Fader(private val faderView: FaderView) {
+class Fader(
+    private val faderView: FaderView,
+    frequency: Int
+) {
 
     companion object {
         const val GAIN_DB_MIN = -12
@@ -23,7 +26,7 @@ class Fader(private val faderView: FaderView) {
     private lateinit var listener: Listener
 
     interface Listener {
-        fun onGainChanged(gainDb: Int)
+        fun onGainChanged(gain: Int)
     }
 
     fun setListener(listener: Listener) {
@@ -31,15 +34,17 @@ class Fader(private val faderView: FaderView) {
     }
 
     init {
+        faderView.showGain(0)
         setGain(0)
+        faderView.showMagnitude(frequency)
         faderView.sb.apply {
             sb.min = PROGRESS_MIN
             sb.max = PROGRESS_MAX
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val gainDb = progressDbMapper.getGainDb(progress)
-                    listener.onGainChanged(gainDb)
-                    showGain(gainDb)
+                    val gain = progressDbMapper.getGain(progress)
+                    listener.onGainChanged(gain)
+                    faderView.showGain(gain)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -48,17 +53,13 @@ class Fader(private val faderView: FaderView) {
         }
     }
 
-    fun setGain(gainDb: Int) {
-        val progress = progressDbMapper.getProgress(gainDb)
+    fun setGain(gain: Int) {
+        val progress = progressDbMapper.getProgress(gain)
         faderView.sb.progress = progress
     }
 
     fun getGain(): Int {
         val progress = faderView.sb.progress
-        return progressDbMapper.getGainDb(progress)
-    }
-
-    private fun showGain(gainDb: Int) {
-        faderView.tv.text = "$gainDb dB"
+        return progressDbMapper.getGain(progress)
     }
 }

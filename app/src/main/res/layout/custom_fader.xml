@@ -8,21 +8,33 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvMagnitude"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
-        android:text="0 dB"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sb"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1 kHz"/>
 
     <SeekBar
         android:id="@+id/sb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:rotation="270"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvGain"
+        app:layout_constraintStart_toEndOf="@id/tvMagnitude"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvGain"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/sb"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0 dB"/>
 </merge>

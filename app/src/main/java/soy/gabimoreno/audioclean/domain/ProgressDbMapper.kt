@@ -1,18 +1,18 @@
 package soy.gabimoreno.audioclean.domain
 
 class ProgressDbMapper(
-    private val gainDbMin: Int,
-    private val gainDbMax: Int,
+    private val gainMin: Int,
+    private val gainMax: Int,
     private val progressMin: Int,
     private val progressMax: Int
 ) {
 
-    fun getGainDb(progress: Int): Int {
-        return progress.mapNumber(progressMin, progressMax, gainDbMin, gainDbMax)
+    fun getGain(progress: Int): Int {
+        return progress.mapNumber(progressMin, progressMax, gainMin, gainMax)
     }
 
-    fun getProgress(gainDb: Int): Int {
-        return gainDb.mapNumber(gainDbMin, gainDbMax, progressMin, progressMax)
+    fun getProgress(gain: Int): Int {
+        return gain.mapNumber(gainMin, gainMax, progressMin, progressMax)
     }
 
     private fun Int.mapNumber(inMin: Int, inMax: Int, outMin: Int, outMax: Int): Int {

@@ -24,6 +24,14 @@ class MainViewModelTest {
         verify(exactly = 1) { audioProcessor.init() }
     }
 
+    @Test
+    fun `if playAudio is called, then MediaPlayer is initialized twice and started only once`() {
+        val viewModel = buildViewModel()
+        viewModel.playAudio()
+        verify(exactly = 2) { mediaPlayer.init(resId) }
+        verify(exactly = 1) { mediaPlayer.start() }
+    }
+
     private fun buildViewModel(): MainViewModel {
         return MainViewModel(
             mediaPlayer,

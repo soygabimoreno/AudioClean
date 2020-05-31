@@ -14,8 +14,10 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
         private const val MULTI_BAND_COMPRESSOR_IN_USE = true
         private const val POST_EQ_IN_USE = true
         private const val LIMITER_IN_USE = true
-        private val BAND_TONES = intArrayOf(31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000)
-        private val N_BANDS = BAND_TONES.size
+
+        private val FREQUENCIES = intArrayOf(31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000)
+        private val N_BANDS = FREQUENCIES.size
+
         private val PRE_EQ_BAND_COUNT = N_BANDS
         private val MULTI_BAND_COMPRESSOR_BAND_COUNT = N_BANDS
         private val POST_EQ_BAND_COUNT = N_BANDS
@@ -36,6 +38,7 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
 
     //    private val eqValues = IntArray(N_BANDS)
     private val eqValues = intArrayOf(0, 0, 0, 0, 0, 0, 0, 6, 6, 6)
+    private lateinit var frequencies: IntArray
 
     fun init() {
         val builder = Config.Builder(
@@ -56,6 +59,9 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
             builder.build()
         )
         dynamicsProcessing.enabled = true
+
+
+        frequencies = FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
 
         eq = Eq(true, true, N_BANDS)
         eq.isEnabled = true
@@ -80,9 +86,9 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
         init()
         KLog.d("Starting Audio Processor...")
         for (i in 0 until N_BANDS) {
-            eq.getBand(i).cutoffFrequency = BAND_TONES[i].toFloat()
+            eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
             setBandGain(i, eqValues[i])
-            mbc.getBand(i).cutoffFrequency = BAND_TONES[i].toFloat()
+            mbc.getBand(i).cutoffFrequency = frequencies[i].toFloat()
         }
         dynamicsProcessing.setPreEqAllChannelsTo(eq)
         dynamicsProcessing.setMbcAllChannelsTo(mbc)
@@ -103,7 +109,19 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
         dynamicsProcessing.setPostEqBandAllChannelsTo(position, band)
     }
 
-    fun setVolume(gainDb: Int) {
-        dynamicsProcessing.setInputGainAllChannelsTo(gainDb.toFloat()) // TODO: This is just to check the behavior
+    fun getFrequencies(): IntArray {
+        return frequencies
+    }
+
+    fun setVolume(gain: Int) {
+        dynamicsProcessing.setInputGainAllChannelsTo(gain.toFloat()) // TODO: This is just to check the behavior
+    }
+
+    fun setVolume0(gain: Int) {
+        dynamicsProcessing.setInputGainbyChannel(0, gain.toFloat())
+    }
+
+    fun setVolume1(gain: Int) {
+        dynamicsProcessing.setInputGainbyChannel(1, gain.toFloat())
     }
 }

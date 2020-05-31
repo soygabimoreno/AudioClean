@@ -8,36 +8,36 @@ class ProgressDBMapperTest {
     @Test
     fun `if min progress is set, then min gain in dB are returned`() {
         val progressDbMapper = buildProgressDbMapper()
-        val gainDb = progressDbMapper.getGainDb(0)
-        assertTrue(-12 == gainDb)
+        val gain = progressDbMapper.getGain(0)
+        assertTrue(-12 == gain)
     }
 
     @Test
     fun `if max progress is set, then max gain in dB are returned`() {
         val progressDbMapper = buildProgressDbMapper()
-        val gainDb = progressDbMapper.getGainDb(100)
-        assertTrue(12 == gainDb)
+        val gain = progressDbMapper.getGain(100)
+        assertTrue(12 == gain)
     }
 
     @Test
     fun `if half progress is set, then half gain in dB are returned`() {
         val progressDbMapper = buildProgressDbMapper()
-        val gainDb = progressDbMapper.getGainDb(50)
-        assertTrue(0 == gainDb)
+        val gain = progressDbMapper.getGain(50)
+        assertTrue(0 == gain)
     }
 
     @Test
     fun `if quarter progress is set, then quarter gain in dB are returned`() {
         val progressDbMapper = buildProgressDbMapper()
-        val gainDb = progressDbMapper.getGainDb(25)
-        assertTrue(-6 == gainDb)
+        val gain = progressDbMapper.getGain(25)
+        assertTrue(-6 == gain)
     }
 
     @Test
     fun `if half quarter progress is set, then half quarter gain in dB are returned`() {
         val progressDbMapper = buildProgressDbMapper()
-        val gainDb = progressDbMapper.getGainDb(12)
-        assertTrue(-9 == gainDb)
+        val gain = progressDbMapper.getGain(12)
+        assertTrue(-9 == gain)
     }
 
     @Test
@@ -76,10 +76,10 @@ class ProgressDBMapperTest {
     }
 
     private fun buildProgressDbMapper(): ProgressDbMapper {
-        val gainDbMin = -12
-        val gainDbMax = 12
+        val gainMin = -12
+        val gainMax = 12
         val progressMin = 0
         val progressMax = 100
-        return ProgressDbMapper(gainDbMin, gainDbMax, progressMin, progressMax)
+        return ProgressDbMapper(gainMin, gainMax, progressMin, progressMax)
     }
 }
