@@ -39,15 +39,7 @@ class MainViewModel(
         return audioProcessor.getFrequencies()
     }
 
-    fun setVolume(gain: Int) {
-        audioProcessor.setVolume(gain)
-    }
-
-    fun setVolume0(gain: Int) {
-        audioProcessor.setVolume0(gain)
-    }
-
-    fun setVolume1(gain: Int) {
-        audioProcessor.setVolume1(gain)
+    fun setVolume(i: Int, gain: Int) {
+        audioProcessor.setVolume(i, gain)
     }
 }

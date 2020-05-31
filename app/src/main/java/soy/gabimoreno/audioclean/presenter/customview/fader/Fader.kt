@@ -6,6 +6,7 @@ import soy.gabimoreno.audioclean.domain.ProgressDbMapper
 
 class Fader(
     private val faderView: FaderView,
+    i: Int,
     frequency: Int
 ) {
 
@@ -26,7 +27,7 @@ class Fader(
     private lateinit var listener: Listener
 
     interface Listener {
-        fun onGainChanged(gain: Int)
+        fun onGainChanged(i: Int, gain: Int)
     }
 
     fun setListener(listener: Listener) {
@@ -43,7 +44,7 @@ class Fader(
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     val gain = progressDbMapper.getGain(progress)
-                    listener.onGainChanged(gain)
+                    listener.onGainChanged(i, gain)
                     faderView.showGain(gain)
                 }
 

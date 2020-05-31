@@ -8,6 +8,7 @@ import org.koin.androidx.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.presenter.customview.fader.Fader
+import soy.gabimoreno.audioclean.presenter.customview.fader.FaderView
 import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initBtnPlayer()
         initCbAudioProcessor()
-        initFader()
+        initFaders()
     }
 
     private fun initBtnPlayer() {
@@ -47,19 +48,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFader() {
+    private fun initFaders() {
         val frequencies = viewModel.getFrequencies()
-        val fader0 = Fader(fv0, frequencies[0])
-        fader0.setListener(object : Fader.Listener {
-            override fun onGainChanged(gain: Int) {
-                viewModel.setVolume(gain)
-            }
-        })
-        val fader1 = Fader(fv1, frequencies[1])
-        fader1.setListener(object : Fader.Listener {
-            override fun onGainChanged(gain: Int) {
-                viewModel.setVolume(gain)
-            }
-        })
+        frequencies.forEachIndexed { i, item ->
+            val faderView = FaderView(this)
+            llFaderViews.addView(faderView)
+            val fader = Fader(faderView, i, item)
+            fader.setListener(object : Fader.Listener {
+                override fun onGainChanged(i: Int, gain: Int) {
+                    viewModel.setVolume(i, gain)
+                }
+            })
+        }
     }
 }

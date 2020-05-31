@@ -113,15 +113,7 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
         return frequencies
     }
 
-    fun setVolume(gain: Int) {
-        dynamicsProcessing.setInputGainAllChannelsTo(gain.toFloat()) // TODO: This is just to check the behavior
-    }
-
-    fun setVolume0(gain: Int) {
-        dynamicsProcessing.setInputGainbyChannel(0, gain.toFloat())
-    }
-
-    fun setVolume1(gain: Int) {
-        dynamicsProcessing.setInputGainbyChannel(1, gain.toFloat())
+    fun setVolume(i: Int, gain: Int) {
+        setBandGain(i, gain)
     }
 }

@@ -22,6 +22,8 @@
         android:id="@+id/sb"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvGain"
         app:layout_constraintStart_toEndOf="@id/tvMagnitude"

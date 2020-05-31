@@ -8,6 +8,7 @@
     tools:context=".presenter.MainActivity">
 
     <LinearLayout
+        android:id="@+id/llFaderViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,16 +17,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <soy.gabimoreno.audioclean.presenter.customview.fader.FaderView
-            android:id="@+id/fv0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <soy.gabimoreno.audioclean.presenter.customview.fader.FaderView
-            android:id="@+id/fv1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"/>
+        <!--        <soy.gabimoreno.audioclean.presenter.customview.fader.FaderView-->
+        <!--            android:id="@+id/fv"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"/>-->
     </LinearLayout>
 
     <Button
