@@ -31,6 +31,7 @@ class Fader(private val faderView: FaderView) {
     }
 
     init {
+        setGain(0)
         faderView.sb.apply {
             sb.min = PROGRESS_MIN
             sb.max = PROGRESS_MAX

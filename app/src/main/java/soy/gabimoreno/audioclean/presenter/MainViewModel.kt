@@ -36,6 +36,6 @@ class MainViewModel(
     }
 
     fun setVolume(gainDb: Int) {
-        // TODO
+        audioProcessor.setVolume(gainDb)
     }
 }

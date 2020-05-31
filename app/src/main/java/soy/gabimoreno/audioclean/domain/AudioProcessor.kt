@@ -102,4 +102,8 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
         dynamicsProcessing.setPreEqBandAllChannelsTo(position, band)
         dynamicsProcessing.setPostEqBandAllChannelsTo(position, band)
     }
+
+    fun setVolume(gainDb: Int) {
+        dynamicsProcessing.setInputGainAllChannelsTo(gainDb.toFloat()) // TODO: This is just to check the behavior
+    }
 }
