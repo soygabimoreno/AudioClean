@@ -4,7 +4,7 @@ import android.media.audiofx.DynamicsProcessing
 import android.media.audiofx.DynamicsProcessing.*
 import soy.gabimoreno.audioclean.framework.KLog
 
-class AudioProcessor(private val mediaPlayer: MediaPlayer) {
+class AudioProcessor(private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase) {
 
     companion object {
         private const val PRIORITY = Int.MAX_VALUE
@@ -52,7 +52,7 @@ class AudioProcessor(private val mediaPlayer: MediaPlayer) {
             POST_EQ_BAND_COUNT,
             LIMITER_IN_USE
         )
-        val sessionId = mediaPlayer.sessionId
+        val sessionId = getAudioSessionIdUseCase()
         dynamicsProcessing = DynamicsProcessing(
             PRIORITY,
             sessionId,
