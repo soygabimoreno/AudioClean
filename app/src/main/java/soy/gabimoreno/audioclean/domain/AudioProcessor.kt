@@ -2,12 +2,14 @@ package soy.gabimoreno.audioclean.domain
 
 import android.media.audiofx.DynamicsProcessing
 import android.media.audiofx.DynamicsProcessing.*
+import soy.gabimoreno.audioclean.domain.usecase.GetDynamicsProcessingUseCase
 import soy.gabimoreno.audioclean.framework.KLog
 
-class AudioProcessor(private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase) {
+class AudioProcessor(
+    private val getDynamicsProcessingUseCase: GetDynamicsProcessingUseCase
+) {
 
     companion object {
-        private const val PRIORITY = Int.MAX_VALUE
         private const val VARIANT = 0
         private const val CHANNEL_COUNT = 1
         private const val PRE_EQ_IN_USE = true
@@ -52,14 +54,9 @@ class AudioProcessor(private val getAudioSessionIdUseCase: GetAudioSessionIdUseC
             POST_EQ_BAND_COUNT,
             LIMITER_IN_USE
         )
-        val sessionId = getAudioSessionIdUseCase()
-        dynamicsProcessing = DynamicsProcessing(
-            PRIORITY,
-            sessionId,
-            builder.build()
-        )
-        dynamicsProcessing.enabled = true
 
+        dynamicsProcessing = getDynamicsProcessingUseCase(builder)
+        dynamicsProcessing.enabled = true
 
         frequencies = FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
 

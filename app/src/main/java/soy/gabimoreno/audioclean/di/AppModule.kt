@@ -5,15 +5,19 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import soy.gabimoreno.audioclean.domain.AudioProcessor
-import soy.gabimoreno.audioclean.domain.GetAudioSessionIdUseCase
 import soy.gabimoreno.audioclean.domain.MediaPlayer
-import soy.gabimoreno.audioclean.presenter.MainActivity
-import soy.gabimoreno.audioclean.presenter.MainViewModel
+import soy.gabimoreno.audioclean.domain.usecase.GetActiveSessionsUseCase
+import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
+import soy.gabimoreno.audioclean.domain.usecase.GetDynamicsProcessingUseCase
+import soy.gabimoreno.audioclean.presentation.MainActivity
+import soy.gabimoreno.audioclean.presentation.MainViewModel
 
 val appModule = module {
     single { MediaPlayer(context = androidContext()) }
-    single { GetAudioSessionIdUseCase(context = androidContext()) }
-    single { AudioProcessor(getAudioSessionIdUseCase = get()) }
+    single { GetActiveSessionsUseCase(context = androidContext()) }
+    single { GetAudioSessionIdUseCase(getActiveSessionsUseCase = get()) }
+    single { GetDynamicsProcessingUseCase(getAudioSessionIdUseCase = get()) }
+    single { AudioProcessor(getDynamicsProcessingUseCase = get()) }
     scope(named<MainActivity>()) {
         viewModel { (resId: Int) ->
             MainViewModel(

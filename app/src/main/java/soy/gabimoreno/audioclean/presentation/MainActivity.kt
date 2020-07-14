@@ -1,17 +1,25 @@
-package soy.gabimoreno.audioclean.presenter
+package soy.gabimoreno.audioclean.presentation
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.provider.Settings
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
 import soy.gabimoreno.audioclean.R
-import soy.gabimoreno.audioclean.presenter.customview.fader.Fader
-import soy.gabimoreno.audioclean.presenter.customview.fader.FaderView
+import soy.gabimoreno.audioclean.framework.AudioSessionReceiver
+import soy.gabimoreno.audioclean.framework.KLog
+import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
+import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var audioSessionReceiver: AudioSessionReceiver
 
     @RawRes
     private val resId = R.raw.audio_demo
@@ -25,6 +33,30 @@ class MainActivity : AppCompatActivity() {
         initBtnPlayer()
         initCbAudioProcessor()
         initFaders()
+
+        requireNotificationAccessPermission()
+
+        audioSessionReceiver = AudioSessionReceiver()
+        val intentFilter = IntentFilter()
+        LocalBroadcastManager.getInstance(this).registerReceiver(audioSessionReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(audioSessionReceiver)
+    }
+
+    private fun requireNotificationAccessPermission() {
+        if (Settings.Secure.getString(
+                contentResolver,
+                "enabled_notification_listeners"
+            ).contains(applicationContext.packageName)
+        ) {
+            KLog.i("ACTION_NOTIFICATION_LISTENER was already enabled")
+        } else {
+            val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+            startActivity(intent)
+        }
     }
 
     private fun initBtnReset() {

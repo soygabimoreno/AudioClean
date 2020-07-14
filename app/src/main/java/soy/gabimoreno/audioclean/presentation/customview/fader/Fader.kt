@@ -1,4 +1,4 @@
-package soy.gabimoreno.audioclean.presenter.customview.fader
+package soy.gabimoreno.audioclean.presentation.customview.fader
 
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.custom_fader.view.*

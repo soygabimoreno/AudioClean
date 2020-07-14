@@ -1,4 +1,4 @@
-package soy.gabimoreno.audioclean.presenter
+package soy.gabimoreno.audioclean.presentation
 
 import io.mockk.mockk
 import io.mockk.verify

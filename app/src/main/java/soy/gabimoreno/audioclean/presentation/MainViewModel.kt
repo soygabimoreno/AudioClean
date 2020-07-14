@@ -1,10 +1,10 @@
-package soy.gabimoreno.audioclean.presenter
+package soy.gabimoreno.audioclean.presentation
 
 import androidx.annotation.RawRes
 import androidx.lifecycle.ViewModel
 import soy.gabimoreno.audioclean.domain.AudioProcessor
 import soy.gabimoreno.audioclean.domain.MediaPlayer
-import soy.gabimoreno.audioclean.presenter.customview.fader.Fader
+import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 
 class MainViewModel(
     private val mediaPlayer: MediaPlayer,
