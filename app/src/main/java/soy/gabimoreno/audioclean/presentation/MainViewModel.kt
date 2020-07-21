@@ -1,6 +1,8 @@
 package soy.gabimoreno.audioclean.presentation
 
 import androidx.annotation.RawRes
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import soy.gabimoreno.audioclean.domain.AudioProcessor
 import soy.gabimoreno.audioclean.domain.MediaPlayer
@@ -12,8 +14,14 @@ class MainViewModel(
     @RawRes private val resId: Int
 ) : ViewModel() {
 
+    private var _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
     init {
         mediaPlayer.init(resId)
+        audioProcessor.setListener {
+            _message.value = it.toString()
+        }
         audioProcessor.init()
     }
 

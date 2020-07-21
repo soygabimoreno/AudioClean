@@ -1,8 +1,10 @@
 package soy.gabimoreno.audioclean.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import org.koin.core.parameter.parametersOf
@@ -21,10 +23,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initViewModel()
         initBtnReset()
         initBtnPlayer()
         initCbAudioProcessor()
         initFaders()
+    }
+
+    private fun initViewModel() {
+        viewModel.message.observe(this, Observer { message ->
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initBtnReset() {

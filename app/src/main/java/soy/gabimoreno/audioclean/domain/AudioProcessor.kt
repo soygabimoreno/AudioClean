@@ -2,14 +2,15 @@ package soy.gabimoreno.audioclean.domain
 
 import android.media.audiofx.DynamicsProcessing
 import android.media.audiofx.DynamicsProcessing.*
-import soy.gabimoreno.audioclean.domain.usecase.GetDynamicsProcessingUseCase
+import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 import soy.gabimoreno.audioclean.framework.KLog
 
 class AudioProcessor(
-    private val getDynamicsProcessingUseCase: GetDynamicsProcessingUseCase
+    private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase
 ) {
 
     companion object {
+        private const val PRIORITY = Int.MAX_VALUE
         private const val VARIANT = 0
         private const val CHANNEL_COUNT = 1
         private const val PRE_EQ_IN_USE = true
@@ -42,7 +43,12 @@ class AudioProcessor(
     private val eqValues = intArrayOf(0, 0, 0, 0, 0, 0, 0, 6, 6, 6)
     private lateinit var frequencies: IntArray
 
+    private lateinit var listener: (Int) -> Unit
+    private var initialized = false
+
     fun init() {
+        frequencies = FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
+
         val builder = Config.Builder(
             VARIANT,
             CHANNEL_COUNT,
@@ -55,55 +61,75 @@ class AudioProcessor(
             LIMITER_IN_USE
         )
 
-        dynamicsProcessing = getDynamicsProcessingUseCase(builder)
-        dynamicsProcessing.enabled = true
+        val audioSessionId = getAudioSessionIdUseCase()
+        listener(audioSessionId)
+        if (audioSessionId < 0) {
+            initialized = false
+        } else {
+            dynamicsProcessing = DynamicsProcessing(
+                PRIORITY,
+                audioSessionId,
+                builder.build()
+            )
+            initialized = true
 
-        frequencies = FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
+            dynamicsProcessing.enabled = true
 
-        eq = Eq(true, true, N_BANDS)
-        eq.isEnabled = true
+            eq = Eq(true, true, N_BANDS)
+            eq.isEnabled = true
 
-        mbc = Mbc(true, true, N_BANDS)
-        mbc.isEnabled = true
+            mbc = Mbc(true, true, N_BANDS)
+            mbc.isEnabled = true
 
-        limiter = Limiter(
-            LIMITER_IN_USE,
-            LIMITER_ENABLED,
-            LIMITER_LINK_GROUP,
-            LIMITER_ATTACK_TIME_MS,
-            LIMITER_RELEASE_TIME_MS,
-            LIMITER_RATIO,
-            LIMITER_THRESHOLD_DB,
-            LIMITER_POST_GAIN_DB
-        )
-        limiter.isEnabled = true
+            limiter = Limiter(
+                LIMITER_IN_USE,
+                LIMITER_ENABLED,
+                LIMITER_LINK_GROUP,
+                LIMITER_ATTACK_TIME_MS,
+                LIMITER_RELEASE_TIME_MS,
+                LIMITER_RATIO,
+                LIMITER_THRESHOLD_DB,
+                LIMITER_POST_GAIN_DB
+            )
+            limiter.isEnabled = true
+        }
+    }
+
+    fun setListener(listener: (Int) -> Unit) {
+        this.listener = listener
     }
 
     fun start() {
-        init()
-        KLog.d("Starting Audio Processor...")
-        for (i in 0 until N_BANDS) {
-            eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
-            setBandGain(i, eqValues[i])
-            mbc.getBand(i).cutoffFrequency = frequencies[i].toFloat()
+        if (initialized) {
+            init()
+            KLog.d("Starting Audio Processor...")
+            for (i in 0 until N_BANDS) {
+                eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
+                setBandGain(i, eqValues[i])
+                mbc.getBand(i).cutoffFrequency = frequencies[i].toFloat()
+            }
+            dynamicsProcessing.setPreEqAllChannelsTo(eq)
+            dynamicsProcessing.setMbcAllChannelsTo(mbc)
+            dynamicsProcessing.setPostEqAllChannelsTo(eq)
+            dynamicsProcessing.setLimiterAllChannelsTo(limiter)
         }
-        dynamicsProcessing.setPreEqAllChannelsTo(eq)
-        dynamicsProcessing.setMbcAllChannelsTo(mbc)
-        dynamicsProcessing.setPostEqAllChannelsTo(eq)
-        dynamicsProcessing.setLimiterAllChannelsTo(limiter)
     }
 
     fun stop() {
-        dynamicsProcessing.enabled = false
+        if (initialized) {
+            dynamicsProcessing.enabled = false
+        }
     }
 
     private fun setBandGain(position: Int, level: Int) {
-        eqValues[position] = level
-        val band = eq.getBand(position)
-        band.isEnabled = true
-        band.gain = eqValues[position].toFloat()
-        dynamicsProcessing.setPreEqBandAllChannelsTo(position, band)
-        dynamicsProcessing.setPostEqBandAllChannelsTo(position, band)
+        if (initialized) {
+            eqValues[position] = level
+            val band = eq.getBand(position)
+            band.isEnabled = true
+            band.gain = eqValues[position].toFloat()
+            dynamicsProcessing.setPreEqBandAllChannelsTo(position, band)
+            dynamicsProcessing.setPostEqBandAllChannelsTo(position, band)
+        }
     }
 
     fun getFrequencies(): IntArray {
