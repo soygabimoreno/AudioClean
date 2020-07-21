@@ -1,10 +1,7 @@
 package soy.gabimoreno.audioclean.domain.usecase
 
-import android.content.Context
-import android.media.AudioManager
-
 class GetAudioSessionIdUseCase(
-    private val context: Context
+    private val getActiveRecordingConfigurationsUseCase: GetActiveRecordingConfigurationsUseCase
 ) {
 
     companion object {
@@ -17,16 +14,16 @@ class GetAudioSessionIdUseCase(
     }
 
     operator fun invoke(): Int {
-        return try {
-            val audioManager = (context.getSystemService(Context.AUDIO_SERVICE) as AudioManager)
-            val activeRecordingConfigurations = audioManager.activeRecordingConfigurations
-            return if (activeRecordingConfigurations.isEmpty()) {
-                Error.NoActiveRecordingConfiguration.type
-            } else {
-                activeRecordingConfigurations[0].clientAudioSessionId - AUDIO_SESSION_ID_STEP
-            }
-        } catch (e: Exception) {
-            Error.NoAudioSessionId.type
-        }
+        getActiveRecordingConfigurationsUseCase()
+            .fold({
+                return Error.NoActiveRecordingConfiguration.type
+            }, { activeRecordingConfigurations ->
+                val audioSessionId = activeRecordingConfigurations[0].clientAudioSessionId - AUDIO_SESSION_ID_STEP
+                return if (audioSessionId < 0) {
+                    Error.NoAudioSessionId.type
+                } else {
+                    audioSessionId
+                }
+            })
     }
 }
