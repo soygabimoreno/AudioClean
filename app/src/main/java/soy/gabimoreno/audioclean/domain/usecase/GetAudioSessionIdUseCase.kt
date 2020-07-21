@@ -5,7 +5,7 @@ class GetAudioSessionIdUseCase(
 ) {
 
     companion object {
-        private const val AUDIO_SESSION_ID_STEP = 8
+        const val AUDIO_SESSION_ID_STEP = 8
     }
 
     sealed class Error(val type: Int) {
