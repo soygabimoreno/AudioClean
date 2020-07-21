@@ -1,7 +1,6 @@
 package soy.gabimoreno.audioclean.presentation
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,8 +30,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.message.observe(this, Observer { message ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        viewModel.info.observe(this, Observer { info ->
+            tvInfo.text = "Audio Session Id: $info"
         })
     }
 

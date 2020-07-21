@@ -14,13 +14,13 @@ class MainViewModel(
     @RawRes private val resId: Int
 ) : ViewModel() {
 
-    private var _message = MutableLiveData<String>()
-    val message: LiveData<String> = _message
+    private var _info = MutableLiveData<String>()
+    val info: LiveData<String> = _info
 
     init {
         mediaPlayer.init(resId)
         audioProcessor.setListener {
-            _message.value = it.toString()
+            _info.value = it.toString()
         }
         audioProcessor.init()
     }

@@ -100,8 +100,8 @@ class AudioProcessor(
     }
 
     fun start() {
+        init()
         if (initialized) {
-            init()
             KLog.d("Starting Audio Processor...")
             for (i in 0 until N_BANDS) {
                 eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
