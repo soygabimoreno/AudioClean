@@ -84,4 +84,4 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 /.idea/
-/app/src/main/res/raw/audio_demo.mp3
+/app/src/main/res/raw/my_demo.mp3
