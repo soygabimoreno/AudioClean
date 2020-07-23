@@ -1,7 +1,9 @@
 package soy.gabimoreno.audioclean.domain.usecase
 
+import soy.gabimoreno.audioclean.framework.GetActiveRecordingConfigurations
+
 class GetAudioSessionIdUseCase(
-    private val getActiveRecordingConfigurationsUseCase: GetActiveRecordingConfigurationsUseCase
+    private val getActiveRecordingConfigurations: GetActiveRecordingConfigurations
 ) {
 
     companion object {
@@ -14,7 +16,7 @@ class GetAudioSessionIdUseCase(
     }
 
     operator fun invoke(): Int {
-        getActiveRecordingConfigurationsUseCase()
+        getActiveRecordingConfigurations()
             .fold({
                 return Error.NoActiveRecordingConfiguration.type
             }, { activeRecordingConfigurations ->

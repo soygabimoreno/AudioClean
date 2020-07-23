@@ -3,8 +3,8 @@ package soy.gabimoreno.audioclean.presentation
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
-import soy.gabimoreno.audioclean.domain.AudioProcessor
-import soy.gabimoreno.audioclean.domain.MediaPlayer
+import soy.gabimoreno.audioclean.framework.AudioProcessor
+import soy.gabimoreno.audioclean.framework.MediaPlayer
 
 class MainViewModelTest {
 

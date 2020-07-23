@@ -1,11 +1,11 @@
-package soy.gabimoreno.audioclean.domain.usecase
+package soy.gabimoreno.audioclean.framework
 
 import android.content.Context
 import android.media.AudioManager
 import android.media.AudioRecordingConfiguration
 import arrow.core.Either
 
-class GetActiveRecordingConfigurationsUseCase(
+class GetActiveRecordingConfigurations(
     private val context: Context
 ) {
 

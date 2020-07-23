@@ -1,9 +1,8 @@
-package soy.gabimoreno.audioclean.domain
+package soy.gabimoreno.audioclean.framework
 
 import android.media.audiofx.DynamicsProcessing
 import android.media.audiofx.DynamicsProcessing.*
 import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
-import soy.gabimoreno.audioclean.framework.KLog
 
 class AudioProcessor(
     private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase
@@ -47,7 +46,8 @@ class AudioProcessor(
     private var initialized = false
 
     fun init() {
-        frequencies = FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
+        frequencies =
+            FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
 
         val builder = Config.Builder(
             VARIANT,

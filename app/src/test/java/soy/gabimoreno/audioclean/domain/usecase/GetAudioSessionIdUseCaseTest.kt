@@ -6,10 +6,11 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import soy.gabimoreno.audioclean.framework.GetActiveRecordingConfigurations
 
 class GetAudioSessionIdUseCaseTest {
 
-    private val getActiveRecordingConfigurationsUseCase = mockk<GetActiveRecordingConfigurationsUseCase>()
+    private val getActiveRecordingConfigurationsUseCase = mockk<GetActiveRecordingConfigurations>()
     private val audioRecordingConfiguration = mockk<AudioRecordingConfiguration>()
     private val audioRecordingConfigurations = mockk<List<AudioRecordingConfiguration>>()
 
@@ -49,7 +50,7 @@ class GetAudioSessionIdUseCaseTest {
 
     private fun givenNoActiveSessions() {
         every { getActiveRecordingConfigurationsUseCase() } returns
-            Either.left(GetActiveRecordingConfigurationsUseCase.NoActiveRecordingConfigurationException)
+            Either.left(GetActiveRecordingConfigurations.NoActiveRecordingConfigurationException)
     }
 
     private fun givenActiveSessions() {

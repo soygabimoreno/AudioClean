@@ -1,4 +1,4 @@
-package soy.gabimoreno.audioclean.domain
+package soy.gabimoreno.audioclean.framework
 
 import android.content.Context
 import android.media.MediaPlayer

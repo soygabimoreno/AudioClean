@@ -4,8 +4,8 @@ import androidx.annotation.RawRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import soy.gabimoreno.audioclean.domain.AudioProcessor
-import soy.gabimoreno.audioclean.domain.MediaPlayer
+import soy.gabimoreno.audioclean.framework.AudioProcessor
+import soy.gabimoreno.audioclean.framework.MediaPlayer
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 
 class MainViewModel(
