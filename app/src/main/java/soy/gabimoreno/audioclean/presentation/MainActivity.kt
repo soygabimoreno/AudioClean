@@ -1,5 +1,6 @@
 package soy.gabimoreno.audioclean.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import org.koin.core.parameter.parametersOf
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
+import soy.gabimoreno.audioclean.service.AudioProcessorService
 import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +58,16 @@ class MainActivity : AppCompatActivity() {
     private fun initCbAudioProcessor() {
         cbCleanAudio.setOnClickListener {
             if (cbCleanAudio.isChecked) {
-                viewModel.startProcessing()
+//                viewModel.startProcessing()
+
+                val intent = Intent(this, AudioProcessorService::class.java)
+                intent.putExtra(AudioProcessorService.EXTRA_TEXT, "AudioClean Text")
+                startForegroundService(intent)
             } else {
-                viewModel.stopProcessing()
+//                viewModel.stopProcessing()
+
+                val intent = Intent(this, AudioProcessorService::class.java)
+                stopService(intent)
             }
         }
     }
