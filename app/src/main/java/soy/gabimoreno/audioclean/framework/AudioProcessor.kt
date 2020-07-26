@@ -7,7 +7,7 @@ import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 
 class AudioProcessor(
     private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase,
-    private val equalization: Equalization
+    equalization: Equalization
 ) {
 
     companion object {
@@ -18,13 +18,6 @@ class AudioProcessor(
         private const val MULTI_BAND_COMPRESSOR_IN_USE = true
         private const val POST_EQ_IN_USE = true
         private const val LIMITER_IN_USE = true
-
-        private val FREQUENCIES = intArrayOf(31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000)
-        private val N_BANDS = FREQUENCIES.size
-
-        private val PRE_EQ_BAND_COUNT = N_BANDS
-        private val MULTI_BAND_COMPRESSOR_BAND_COUNT = N_BANDS
-        private val POST_EQ_BAND_COUNT = N_BANDS
 
         private const val LIMITER_ENABLED = true
         private const val LIMITER_LINK_GROUP = 0
@@ -42,24 +35,26 @@ class AudioProcessor(
 
     //    private val eqValues = IntArray(N_BANDS)
     private val eqValues = intArrayOf(0, 0, 0, 0, 0, 0, 0, 6, 6, 6)
-    private lateinit var frequencies: IntArray
+    private val frequencies = equalization.getFrequencies().toIntArray()
+
+    private val nBands = equalization.getNBands()
+    private val preEqBandCount = nBands
+    private val multiBandCompressorBandCount = nBands
+    private val postEqBandCount = nBands
 
     private lateinit var listener: (Int) -> Unit
     private var initialized = false
 
     fun init() {
-        frequencies =
-            FREQUENCIES // TODO: This is temporary. Get the proper tones each device should have
-
         val builder = Config.Builder(
             VARIANT,
             CHANNEL_COUNT,
             PRE_EQ_IN_USE,
-            PRE_EQ_BAND_COUNT,
+            preEqBandCount,
             MULTI_BAND_COMPRESSOR_IN_USE,
-            MULTI_BAND_COMPRESSOR_BAND_COUNT,
+            multiBandCompressorBandCount,
             POST_EQ_IN_USE,
-            POST_EQ_BAND_COUNT,
+            postEqBandCount,
             LIMITER_IN_USE
         )
 
@@ -77,10 +72,10 @@ class AudioProcessor(
 
             dynamicsProcessing.enabled = true
 
-            eq = Eq(true, true, N_BANDS)
+            eq = Eq(true, true, nBands)
             eq.isEnabled = true
 
-            mbc = Mbc(true, true, N_BANDS)
+            mbc = Mbc(true, true, nBands)
             mbc.isEnabled = true
 
             limiter = Limiter(
@@ -105,7 +100,7 @@ class AudioProcessor(
         init()
         if (initialized) {
             KLog.d("Starting Audio Processor...")
-            for (i in 0 until N_BANDS) {
+            for (i in 0 until nBands) {
                 eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
                 setBandGain(i, eqValues[i])
                 mbc.getBand(i).cutoffFrequency = frequencies[i].toFloat()
