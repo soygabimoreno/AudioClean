@@ -128,9 +128,8 @@ class AudioProcessor(
         }
     }
 
-    fun getFrequencies(): IntArray {
-        return frequencies
-    }
+    fun getFrequencies(): IntArray = frequencies
+    fun getGains(): IntArray = gains
 
     fun setVolume(i: Int, gain: Int) {
         setBandGain(i, gain)

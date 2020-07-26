@@ -8,8 +8,8 @@ class DefaultEqualization {
 
     fun get() = Equalization(
         listOf(
-            FrequencyGain(Frequencies.FREQ_31.value, 0),
-            FrequencyGain(Frequencies.FREQ_62.value, 0),
+            FrequencyGain(Frequencies.FREQ_31.value, 12),
+            FrequencyGain(Frequencies.FREQ_62.value, 12),
             FrequencyGain(Frequencies.FREQ_125.value, 0),
             FrequencyGain(Frequencies.FREQ_250.value, 0),
             FrequencyGain(Frequencies.FREQ_500.value, 0),

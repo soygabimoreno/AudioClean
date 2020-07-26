@@ -46,9 +46,8 @@ class MainViewModel(
         audioProcessor.stop()
     }
 
-    fun getFrequencies(): IntArray {
-        return audioProcessor.getFrequencies()
-    }
+    fun getFrequencies(): IntArray = audioProcessor.getFrequencies()
+    fun getGains(): IntArray = audioProcessor.getGains()
 
     fun setVolume(i: Int, gain: Int) {
         audioProcessor.setVolume(i, gain)
