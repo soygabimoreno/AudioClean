@@ -4,7 +4,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import soy.gabimoreno.audioclean.data.DefaultEqualization
+import soy.gabimoreno.audioclean.data.VoiceManEqualization
 import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
@@ -17,7 +17,7 @@ val appModule = module {
     single { MediaPlayer(context = androidContext()) }
     single { GetActiveRecordingConfigurations(context = androidContext()) }
     single { GetAudioSessionIdUseCase(getActiveRecordingConfigurations = get()) }
-    single<Equalization> { DefaultEqualization().get() }
+    single<Equalization> { VoiceManEqualization().get() }
     single {
         AudioProcessor(
             getAudioSessionIdUseCase = get(),

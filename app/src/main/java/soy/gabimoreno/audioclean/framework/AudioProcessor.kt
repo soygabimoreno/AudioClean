@@ -24,7 +24,7 @@ class AudioProcessor(
         private const val LIMITER_ATTACK_TIME_MS = 1f
         private const val LIMITER_RELEASE_TIME_MS = 60f
         private const val LIMITER_RATIO = 10f // N:1
-        private const val LIMITER_THRESHOLD_DB = -2f
+        private const val LIMITER_THRESHOLD_DB = -6f
         private const val LIMITER_POST_GAIN_DB = 0f
     }
 
