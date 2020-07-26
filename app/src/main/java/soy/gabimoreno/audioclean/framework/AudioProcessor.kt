@@ -33,9 +33,8 @@ class AudioProcessor(
     private lateinit var mbc: Mbc
     private lateinit var limiter: Limiter
 
-    //    private val eqValues = IntArray(N_BANDS)
-    private val eqValues = intArrayOf(0, 0, 0, 0, 0, 0, 0, 6, 6, 6)
-    private val frequencies = equalization.getFrequencies().toIntArray()
+    private val frequencies = equalization.getFrequencies()
+    private val gains = equalization.getGains()
 
     private val nBands = equalization.getNBands()
     private val preEqBandCount = nBands
@@ -102,7 +101,7 @@ class AudioProcessor(
             KLog.d("Starting Audio Processor...")
             for (i in 0 until nBands) {
                 eq.getBand(i).cutoffFrequency = frequencies[i].toFloat()
-                setBandGain(i, eqValues[i])
+                setBandGain(i, gains[i])
                 mbc.getBand(i).cutoffFrequency = frequencies[i].toFloat()
             }
             dynamicsProcessing.setPreEqAllChannelsTo(eq)
@@ -120,10 +119,10 @@ class AudioProcessor(
 
     private fun setBandGain(position: Int, level: Int) {
         if (initialized) {
-            eqValues[position] = level
+            gains[position] = level
             val band = eq.getBand(position)
             band.isEnabled = true
-            band.gain = eqValues[position].toFloat()
+            band.gain = gains[position].toFloat()
             dynamicsProcessing.setPreEqBandAllChannelsTo(position, band)
             dynamicsProcessing.setPostEqBandAllChannelsTo(position, band)
         }

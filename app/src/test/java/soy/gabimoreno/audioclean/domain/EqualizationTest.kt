@@ -38,13 +38,36 @@ class EqualizationTest {
             )
         )
         val frequencies = equalization.getFrequencies()
-        assertTrue(listOf(freq1, freq2, freq3) == frequencies)
+        assertTrue(intArrayOf(freq1, freq2, freq3).contentEquals(frequencies))
     }
 
     @Test
     fun `if equalization is empty, then getFrequencies() returns an empty list`() {
         val equalization = Equalization(listOf())
         val frequencies = equalization.getFrequencies()
-        assertTrue(emptyList<Int>() == frequencies)
+        assertTrue(intArrayOf().contentEquals(frequencies))
+    }
+
+    @Test
+    fun `if equalization has some gains, then getGains() returns them`() {
+        val gain1 = 0
+        val gain2 = -3
+        val gain3 = 6
+        val equalization = Equalization(
+            listOf(
+                FrequencyGain(1, 0),
+                FrequencyGain(2, -3),
+                FrequencyGain(3, 6)
+            )
+        )
+        val gains = equalization.getGains()
+        assertTrue(intArrayOf(gain1, gain2, gain3).contentEquals(gains))
+    }
+
+    @Test
+    fun `if equalization is empty, then getGains() returns an empty list`() {
+        val equalization = Equalization(listOf())
+        val gains = equalization.getGains()
+        assertTrue(intArrayOf().contentEquals(gains))
     }
 }
