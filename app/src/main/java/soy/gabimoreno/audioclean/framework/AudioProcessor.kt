@@ -2,10 +2,12 @@ package soy.gabimoreno.audioclean.framework
 
 import android.media.audiofx.DynamicsProcessing
 import android.media.audiofx.DynamicsProcessing.*
+import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 
 class AudioProcessor(
-    private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase
+    private val getAudioSessionIdUseCase: GetAudioSessionIdUseCase,
+    private val equalization: Equalization
 ) {
 
     companion object {

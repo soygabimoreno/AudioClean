@@ -42,7 +42,7 @@ class AudioProcessorService : Service() {
 
         audioProcessor.start()
 
-        // TODO: Here I have to
+        // TODO: Here I have to process any effect
 
         return START_STICKY
     }

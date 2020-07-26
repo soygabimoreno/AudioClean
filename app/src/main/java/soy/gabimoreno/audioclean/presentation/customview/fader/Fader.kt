@@ -7,6 +7,7 @@ import soy.gabimoreno.audioclean.domain.ProgressDbMapper
 class Fader(
     private val faderView: FaderView,
     i: Int,
+    gain: Int,
     frequency: Int
 ) {
 
@@ -35,17 +36,17 @@ class Fader(
     }
 
     init {
-        faderView.showGain(0)
-        setGain(0)
+        faderView.showGain(gain)
+        setGain(gain)
         faderView.showMagnitude(frequency)
         faderView.sb.apply {
             sb.min = PROGRESS_MIN
             sb.max = PROGRESS_MAX
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    val gain = progressDbMapper.getGain(progress)
-                    listener.onGainChanged(i, gain)
-                    faderView.showGain(gain)
+                    val currentGain = progressDbMapper.getGain(progress)
+                    listener.onGainChanged(i, currentGain)
+                    faderView.showGain(currentGain)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}

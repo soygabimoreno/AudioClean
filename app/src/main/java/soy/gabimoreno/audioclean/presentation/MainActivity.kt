@@ -74,10 +74,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFaders() {
         val frequencies = viewModel.getFrequencies()
-        frequencies.forEachIndexed { i, item ->
+        frequencies.forEachIndexed { index, frequency ->
             val faderView = FaderView(this)
             llFaderViews.addView(faderView)
-            val fader = Fader(faderView, i, item)
+            val fader = Fader(faderView, index, 0, frequency)
             viewModel.addFader(fader)
         }
     }
