@@ -4,18 +4,26 @@ import androidx.annotation.RawRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
+import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
+import soy.gabimoreno.audioclean.framework.KLog
 import soy.gabimoreno.audioclean.framework.MediaPlayer
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 
 class MainViewModel(
     private val mediaPlayer: MediaPlayer,
     private val audioProcessor: AudioProcessor,
+    private val equalizationDatasource: EqualizationDatasource,
+    private val getEqualizationUseCase: GetEqualizationUseCase,
     @RawRes private val resId: Int
 ) : ViewModel() {
 
     private var _info = MutableLiveData<String>()
     val info: LiveData<String> = _info
+
+    private var _equalization = MutableLiveData<String>()
+    val equalization: LiveData<String> = _equalization
 
     init {
         mediaPlayer.init(resId)
@@ -60,6 +68,25 @@ class MainViewModel(
                 setVolume(i, gain)
             }
         })
+    }
+
+    fun loadEqualization() {
+        equalizationDatasource.load()
+            .fold({
+                KLog.e("Error loading equalization")
+            }, { equalization ->
+                faders.forEachIndexed { i, fader ->
+                    fader.setGain(equalization.frequencyGains[i].gain)
+                }
+            })
+    }
+
+    fun saveEqualization() {
+        val frequencies = faders.map { it.frequency }.toIntArray()
+        val gains = faders.map { it.getGain() }.toIntArray()
+        val equalization = getEqualizationUseCase(frequencies, gains)
+        equalizationDatasource.save(equalization)
+        _equalization.value = equalization.toString()
     }
 
     fun resetFaders() {

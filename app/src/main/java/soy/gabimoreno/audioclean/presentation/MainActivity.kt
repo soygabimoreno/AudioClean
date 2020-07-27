@@ -3,6 +3,7 @@ package soy.gabimoreno.audioclean.presentation
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.RawRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
+        initBtnLoad()
+        initBtnSave()
         initBtnReset()
         initBtnPlayer()
         initCbAudioProcessor()
@@ -35,6 +38,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.info.observe(this, Observer { info ->
             tvInfo.text = "Audio Session Id: $info"
         })
+        viewModel.equalization.observe(this, Observer { equalization ->
+            AlertDialog.Builder(
+                this@MainActivity
+            )
+                .setTitle(R.string.equalization)
+                .setMessage(equalization)
+                .show()
+        })
+    }
+
+    private fun initBtnLoad() {
+        btnLoad.setOnClickListener {
+            viewModel.loadEqualization()
+        }
+    }
+
+    private fun initBtnSave() {
+        btnSave.setOnClickListener {
+            viewModel.saveEqualization()
+        }
     }
 
     private fun initBtnReset() {

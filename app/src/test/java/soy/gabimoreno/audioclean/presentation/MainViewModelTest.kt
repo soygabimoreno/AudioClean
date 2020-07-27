@@ -3,6 +3,8 @@ package soy.gabimoreno.audioclean.presentation
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
+import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
+import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
 import soy.gabimoreno.audioclean.framework.MediaPlayer
 
@@ -10,6 +12,8 @@ class MainViewModelTest {
 
     private val mediaPlayer = mockk<MediaPlayer>(relaxed = true)
     private val audioProcessor = mockk<AudioProcessor>(relaxed = true)
+    private val equalizationDatasource = mockk<EqualizationDatasource>(relaxed = true)
+    private val getEqualizationUseCase = mockk<GetEqualizationUseCase>(relaxed = true)
     private val resId = 1234
 
     @Test
@@ -36,6 +40,8 @@ class MainViewModelTest {
         return MainViewModel(
             mediaPlayer,
             audioProcessor,
+            equalizationDatasource,
+            getEqualizationUseCase,
             resId
         )
     }

@@ -1,4 +1,4 @@
-package soy.gabimoreno.audioclean.framework
+package soy.gabimoreno.audioclean.framework.extension
 
 import android.view.LayoutInflater
 import android.view.View

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.custom_fader.view.*
 import soy.gabimoreno.audioclean.R
-import soy.gabimoreno.audioclean.framework.inflateCustom
+import soy.gabimoreno.audioclean.framework.extension.inflateCustom
 
 class FaderView @JvmOverloads constructor(
     context: Context,

@@ -7,7 +7,7 @@ import soy.gabimoreno.audioclean.domain.ProgressDbMapper
 class Fader(
     private val faderView: FaderView,
     i: Int,
-    frequency: Int,
+    val frequency: Int,
     gain: Int
 ) {
 
