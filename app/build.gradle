@@ -5,6 +5,18 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
+    Properties properties = new Properties()
+    properties.load(project.file('../local.properties').newDataInputStream())
+
+    signingConfigs {
+        release {
+            storeFile file(properties.getProperty('keystore.storeFile'))
+            storePassword properties.getProperty('keystore.storePassword')
+            keyAlias properties.getProperty('keystore.keyAlias')
+            keyPassword properties.getProperty('keystore.keyPassword')
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -18,13 +30,20 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    bundle {
+        density { enableSplit true }
+        abi { enableSplit true }
+        language { enableSplit false }
+    }
+
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
