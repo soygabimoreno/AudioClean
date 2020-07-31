@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "350032730193",
+    "firebase_url": "https://audioclean-4071c.firebaseio.com",
+    "project_id": "audioclean-4071c",
+    "storage_bucket": "audioclean-4071c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350032730193:android:1239a42f64239aec2d4070",
+        "android_client_info": {
+          "package_name": "soy.gabimoreno.audioclean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350032730193-pk9njh0v1ubl5sb27478b0n3s82lk52t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "soy.gabimoreno.audioclean",
+            "certificate_hash": "b53fd050b38c1cf279893295989c7fb9af1875dd"
+          }
+        },
+        {
+          "client_id": "350032730193-1nshgg7rbdbs2eaamp4v8me1qidaljr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpJOP6g6Dn_CMdWbPUibUBEI7rm9mp16c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350032730193-1nshgg7rbdbs2eaamp4v8me1qidaljr9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

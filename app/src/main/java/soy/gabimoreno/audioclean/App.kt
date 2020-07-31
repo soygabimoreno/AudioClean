@@ -3,6 +3,7 @@ package soy.gabimoreno.audioclean
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.logger.AndroidLogger
 import org.koin.core.context.startKoin
@@ -20,6 +21,7 @@ class App : Application() {
         super.onCreate()
         KLog.launch(BuildConfig.DEBUG)
         initKoin()
+        initFirebase()
         createNotificationChannel()
     }
 
@@ -29,6 +31,10 @@ class App : Application() {
             androidContext(this@App)
             modules(serviceLocator)
         }
+    }
+
+    private fun initFirebase() {
+        FirebaseApp.initializeApp(this)
     }
 
     private fun createNotificationChannel() {
