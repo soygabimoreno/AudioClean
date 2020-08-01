@@ -40,10 +40,14 @@ android {
         debug {
             applicationIdSuffix ".debug"
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            splits.abi.enable = false
+            splits.density.enable = false
+            ext.enableCrashlytics = false
         }
         release {
+            debuggable true
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
