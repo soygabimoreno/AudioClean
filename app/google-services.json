@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "350032730193-pk9njh0v1ubl5sb27478b0n3s82lk52t.apps.googleusercontent.com",
+          "client_id": "350032730193-pmtkena45d4nnfkqrlntt8enr2mfuvhf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "soy.gabimoreno.audioclean",
-            "certificate_hash": "b53fd050b38c1cf279893295989c7fb9af1875dd"
+            "certificate_hash": "4e9c977335ae66c1eedb04877161dbe98316bec7"
+          }
+        },
+        {
+          "client_id": "350032730193-ohqervd6iajm1u2d6ni9r1662vg0vte8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "soy.gabimoreno.audioclean",
+            "certificate_hash": "87ac4c3297c878c89e6d2b33061605f3f05bc295"
           }
         },
         {
