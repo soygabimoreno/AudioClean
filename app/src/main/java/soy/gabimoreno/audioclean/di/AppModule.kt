@@ -12,12 +12,10 @@ import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
 import soy.gabimoreno.audioclean.framework.GetActiveRecordingConfigurations
-import soy.gabimoreno.audioclean.framework.MediaPlayer
 import soy.gabimoreno.audioclean.presentation.MainActivity
 import soy.gabimoreno.audioclean.presentation.MainViewModel
 
 val appModule = module {
-    single { MediaPlayer(context = androidContext()) }
     single { GetActiveRecordingConfigurations(context = androidContext()) }
     single { GetAudioSessionIdUseCase(getActiveRecordingConfigurations = get()) }
     single { GetEqualizationUseCase() }
@@ -35,13 +33,11 @@ val appModule = module {
         )
     }
     scope(named<MainActivity>()) {
-        viewModel { (resId: Int) ->
+        viewModel {
             MainViewModel(
-                mediaPlayer = get(),
                 audioProcessor = get(),
                 equalizationDatasource = get(),
-                getEqualizationUseCase = get(),
-                resId = resId
+                getEqualizationUseCase = get()
             )
         }
     }

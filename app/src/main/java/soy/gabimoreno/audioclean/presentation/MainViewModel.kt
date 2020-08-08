@@ -1,6 +1,5 @@
 package soy.gabimoreno.audioclean.presentation
 
-import androidx.annotation.RawRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,15 +7,12 @@ import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
 import soy.gabimoreno.audioclean.framework.KLog
-import soy.gabimoreno.audioclean.framework.MediaPlayer
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 
 class MainViewModel(
-    private val mediaPlayer: MediaPlayer,
     private val audioProcessor: AudioProcessor,
     private val equalizationDatasource: EqualizationDatasource,
-    private val getEqualizationUseCase: GetEqualizationUseCase,
-    @RawRes private val resId: Int
+    private val getEqualizationUseCase: GetEqualizationUseCase
 ) : ViewModel() {
 
     private var _info = MutableLiveData<String>()
@@ -26,7 +22,6 @@ class MainViewModel(
     val equalization: LiveData<String> = _equalization
 
     init {
-        mediaPlayer.init(resId)
         audioProcessor.setListener {
             _info.value = it.toString()
         }
@@ -34,17 +29,6 @@ class MainViewModel(
     }
 
     private val faders = mutableListOf<Fader>()
-
-    fun isPlayingAudio() = mediaPlayer.isPlaying()
-
-    fun playAudio() {
-        mediaPlayer.init(resId)
-        mediaPlayer.start()
-    }
-
-    fun stopAudio() {
-        mediaPlayer.stop()
-    }
 
     fun startProcessing() {
         audioProcessor.start()

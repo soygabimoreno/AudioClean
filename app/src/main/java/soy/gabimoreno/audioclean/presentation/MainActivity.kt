@@ -2,13 +2,11 @@ package soy.gabimoreno.audioclean.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.RawRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
-import org.koin.core.parameter.parametersOf
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
@@ -17,10 +15,7 @@ import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
 
-    @RawRes
-    private val resId = R.raw.audio_demo
-
-    private val viewModel: MainViewModel by koinScope.viewModel(this) { parametersOf(resId) }
+    private val viewModel: MainViewModel by koinScope.viewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         initBtnLoad()
         initBtnSave()
         initBtnReset()
-        initBtnPlayer()
         initCbAudioProcessor()
         initFaders()
     }
@@ -63,18 +57,6 @@ class MainActivity : AppCompatActivity() {
     private fun initBtnReset() {
         btnReset.setOnClickListener {
             viewModel.resetFaders()
-        }
-    }
-
-    private fun initBtnPlayer() {
-        btnPlayer.setOnClickListener {
-            if (viewModel.isPlayingAudio()) {
-                btnPlayer.setText(R.string.start)
-                viewModel.stopAudio()
-            } else {
-                btnPlayer.setText(R.string.stop)
-                viewModel.playAudio()
-            }
         }
     }
 
