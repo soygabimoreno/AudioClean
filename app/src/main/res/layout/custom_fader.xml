@@ -5,18 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:layout_height="match_parent"
     tools:layout_width="match_parent"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    tools:rotation="-90">
 
     <TextView
         android:id="@+id/tvMagnitude"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1 kHz"/>
+        tools:text="125\nHz"/>
 
     <SeekBar
         android:id="@+id/sb"
@@ -34,9 +36,10 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sb"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="0 dB"/>
+        tools:text="0\ndB"/>
 </merge>

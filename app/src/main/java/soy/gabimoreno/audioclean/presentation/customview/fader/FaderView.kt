@@ -17,14 +17,14 @@ class FaderView @JvmOverloads constructor(
     }
 
     fun showGain(gain: Int) {
-        tvGain.text = "$gain dB"
+        tvGain.text = "$gain"
     }
 
     fun showMagnitude(frequency: Int) {
         if (frequency < 1000) {
-            tvMagnitude.text = "$frequency Hz"
+            tvMagnitude.text = "$frequency"
         } else {
-            tvMagnitude.text = "${frequency / 1000} kHz"
+            tvMagnitude.text = "${frequency / 1000}k"
         }
     }
 }
