@@ -21,11 +21,16 @@ class MainViewModel(
     private var _equalization = MutableLiveData<String>()
     val equalization: LiveData<String> = _equalization
 
+    private var _equalizationNames = MutableLiveData<Array<String>>()
+    val equalizationNames: LiveData<Array<String>> = _equalizationNames
+
     init {
         audioProcessor.setListener {
             _info.value = it.toString()
         }
         audioProcessor.init()
+
+        _equalizationNames.value = arrayOf("One", "Two", "Three")
     }
 
     private val faders = mutableListOf<Fader>()
@@ -54,7 +59,7 @@ class MainViewModel(
         })
     }
 
-    fun loadEqualization() {
+    fun loadEqualization(position: Int) {
         equalizationDatasource.load()
             .fold({
                 KLog.e("Error loading equalization")

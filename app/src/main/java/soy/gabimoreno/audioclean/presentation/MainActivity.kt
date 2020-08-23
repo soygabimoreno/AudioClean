@@ -2,12 +2,14 @@ package soy.gabimoreno.audioclean.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.R
+import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
-        initBtnLoad()
+        initSpinner()
         initBtnSave()
         initBtnReset()
         initCbAudioProcessor()
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.info.observe(this, Observer { info ->
             tvInfo.text = "Audio Session Id: $info"
         })
+
         viewModel.equalization.observe(this, Observer { equalization ->
             AlertDialog.Builder(
                 this@MainActivity
@@ -40,11 +43,16 @@ class MainActivity : AppCompatActivity() {
                 .setMessage(equalization)
                 .show()
         })
+
+        viewModel.equalizationNames.observe(this, Observer { names ->
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, names)
+            spinner.adapter = adapter
+        })
     }
 
-    private fun initBtnLoad() {
-        btnLoad.setOnClickListener {
-            viewModel.loadEqualization()
+    private fun initSpinner() {
+        spinner.setOnItemSelected { position ->
+            viewModel.loadEqualization(position)
         }
     }
 
