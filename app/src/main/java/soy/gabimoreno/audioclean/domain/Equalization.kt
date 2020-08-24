@@ -1,7 +1,7 @@
 package soy.gabimoreno.audioclean.domain
 
 data class Equalization(
-//    val name: String,
+    val name: String,
     val frequencyGains: List<FrequencyGain>
 ) {
     fun getNBands(): Int = frequencyGains.size

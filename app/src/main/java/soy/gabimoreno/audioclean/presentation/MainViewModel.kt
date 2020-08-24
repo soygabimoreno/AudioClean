@@ -70,10 +70,10 @@ class MainViewModel(
             })
     }
 
-    fun saveEqualization() {
+    fun saveEqualization(equalizationName: String) {
         val frequencies = faders.map { it.frequency }.toIntArray()
         val gains = faders.map { it.getGain() }.toIntArray()
-        val equalization = getEqualizationUseCase(frequencies, gains)
+        val equalization = getEqualizationUseCase(equalizationName, frequencies, gains)
         equalizationDatasource.save(equalization)
         _equalization.value = equalization.toString()
     }

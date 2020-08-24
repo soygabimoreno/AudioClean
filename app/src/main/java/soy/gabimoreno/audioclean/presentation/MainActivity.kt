@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBtnSave() {
         btnSave.setOnClickListener {
-            viewModel.saveEqualization()
+            viewModel.saveEqualization("awesome name") // TODO
         }
     }
 

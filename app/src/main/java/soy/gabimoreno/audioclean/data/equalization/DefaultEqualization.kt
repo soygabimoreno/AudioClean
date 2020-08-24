@@ -7,6 +7,7 @@ import soy.gabimoreno.audioclean.domain.FrequencyGain
 class DefaultEqualization {
 
     fun get() = Equalization(
+        "Default",
         listOf(
             FrequencyGain(Frequencies.FREQ_31.value, 0),
             FrequencyGain(Frequencies.FREQ_62.value, 0),

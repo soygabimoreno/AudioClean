@@ -7,6 +7,7 @@ import soy.gabimoreno.audioclean.domain.FrequencyGain
 class VoiceManEqualization {
 
     fun get() = Equalization(
+        "VoiceManEqualization",
         listOf(
             FrequencyGain(Frequencies.FREQ_31.value, -12),
             FrequencyGain(Frequencies.FREQ_62.value, -12),
