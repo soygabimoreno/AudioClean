@@ -3,16 +3,20 @@ package soy.gabimoreno.audioclean.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.R
+import soy.gabimoreno.audioclean.framework.extension.isFilled
 import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
+import java.text.SimpleDateFormat
+import java.util.*
 import org.koin.androidx.scope.lifecycleScope as koinScope
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +62,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBtnSave() {
         btnSave.setOnClickListener {
-            viewModel.saveEqualization("awesome name") // TODO
+            val builder = AlertDialog.Builder(this@MainActivity)
+            builder.setTitle(R.string.equalization)
+            val et = EditText(this)
+
+            val pattern = "yyyy-MM-dd HH:mm:ss"
+            val simpleDateFormat = SimpleDateFormat(pattern, Locale.US)
+            val date = simpleDateFormat.format(Date())
+            et.setText(date.toString())
+
+            builder.setView(et)
+            builder.setPositiveButton(R.string.save) { _, _ ->
+                val equalizationName = et.text.toString()
+                if (equalizationName.isFilled()) {
+                    viewModel.saveEqualization(equalizationName)
+                }
+            }
+            builder.show()
         }
     }
 
