@@ -39,17 +39,21 @@ class MainActivity : AppCompatActivity() {
             tvInfo.text = "Audio Session Id: $info"
         })
 
-        viewModel.equalization.observe(this, Observer { equalization ->
-            AlertDialog.Builder(
-                this@MainActivity
-            )
-                .setTitle(R.string.equalization)
-                .setMessage(equalization)
-                .show()
-        })
+        viewModel.equalizations.observe(this, Observer { equalizations ->
+            if (equalizations.isNotEmpty()) {
+                AlertDialog.Builder(
+                    this@MainActivity
+                )
+                    .setTitle(R.string.equalization)
+                    .setMessage(equalizations[viewModel.currentEqualizationPosition.value!!].toString())
+                    .show()
+            }
 
-        viewModel.equalizationNames.observe(this, Observer { names ->
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, names)
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                equalizations.map { it.name }
+            )
             spinner.adapter = adapter
         })
     }
@@ -64,14 +68,15 @@ class MainActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val builder = AlertDialog.Builder(this@MainActivity)
             builder.setTitle(R.string.equalization)
-            val et = EditText(this)
 
             val pattern = "yyyy-MM-dd HH:mm:ss"
             val simpleDateFormat = SimpleDateFormat(pattern, Locale.US)
             val date = simpleDateFormat.format(Date())
-            et.setText(date.toString())
 
+            val et = EditText(this)
+            et.setText(date.toString())
             builder.setView(et)
+
             builder.setPositiveButton(R.string.save) { _, _ ->
                 val equalizationName = et.text.toString()
                 if (equalizationName.isFilled()) {

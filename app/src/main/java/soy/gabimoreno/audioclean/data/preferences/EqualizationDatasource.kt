@@ -13,23 +13,50 @@ class EqualizationDatasource(
     private val sharedPreferences: SharedPreferences
 ) {
 
-    companion object {
-        private const val EQUALIZATION_DATASOURCE = "EQUALIZATION_DATASOURCE"
+    enum class Positions {
+        ZERO,
+        ONE,
+        TWO
     }
 
     private val gson: Gson by lazy { Gson() }
 
-    fun load(): Either<Throwable, Equalization> = Either.unsafeCatch {
-        sharedPreferences.getString(EQUALIZATION_DATASOURCE, "")
+    fun load(position: Positions): Either<Throwable, Equalization> = Either.unsafeCatch {
+        sharedPreferences.getString(position.name, "")
     }.flatMap { jsonString ->
         Either.unsafeCatch {
             gson.fromJson<Equalization>(jsonString!!)
         }
     }
 
+    fun loadAll(): Either<Throwable, List<Equalization>> {
+        val list = mutableListOf<Equalization>()
+        Positions.values().forEach {
+            Either.unsafeCatch {
+                sharedPreferences.getString(it.name, "")
+            }.flatMap { jsonString ->
+                Either.unsafeCatch {
+                    val item = gson.fromJson<Equalization>(jsonString!!)
+                    if (item != null) {
+                        list.add(item)
+                    }
+                }
+            }
+
+        }
+        return Either.right(list)
+    }
+
     fun save(equalization: Equalization) {
-        sharedPreferences.edit()
-            .putString(EQUALIZATION_DATASOURCE, equalization.toJSONString())
-            .apply()
+        run loop@{
+            Positions.values().forEach { equalizationDatasource ->
+                if (sharedPreferences.getString(equalizationDatasource.name, "") == "") {
+                    sharedPreferences.edit()
+                        .putString(equalizationDatasource.name, equalization.toJSONString())
+                        .apply()
+                    return@loop
+                }
+            }
+        }
     }
 }

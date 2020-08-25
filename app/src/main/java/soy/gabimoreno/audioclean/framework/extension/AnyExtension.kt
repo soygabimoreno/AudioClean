@@ -5,3 +5,6 @@ import com.google.gson.Gson
 fun Any.toJSONString(): String {
     return Gson().toJson(this, Any::class.java)
 }
+
+val Any?.exhaustive
+    get() = Unit
