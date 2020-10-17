@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AudioClean</string>
+    <string name="app_name">Meet Equalizer</string>
     <string name="load">LOAD</string>
     <string name="save">SAVE</string>
     <string name="start">START</string>
