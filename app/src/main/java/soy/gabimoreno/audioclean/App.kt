@@ -27,7 +27,7 @@ class App : Application() {
 
     private fun initKoin() {
         startKoin {
-            if (BuildConfig.DEBUG) logger(AndroidLogger(Level.DEBUG))
+            if (BuildConfig.DEBUG) logger(AndroidLogger(Level.ERROR))
             androidContext(this@App)
             modules(serviceLocator)
         }

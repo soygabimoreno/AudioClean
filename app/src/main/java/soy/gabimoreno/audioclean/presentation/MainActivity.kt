@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.R
@@ -35,11 +34,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.info.observe(this, Observer { info ->
+        viewModel.info.observe(this, { info ->
             tvInfo.text = "Audio Session Id: $info"
         })
 
-        viewModel.equalizations.observe(this, Observer { equalizations ->
+        viewModel.equalizations.observe(this, { equalizations ->
             if (equalizations.isNotEmpty()) {
                 AlertDialog.Builder(
                     this@MainActivity
