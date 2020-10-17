@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Meet Equalizer</string>
-    <string name="load">LOAD</string>
-    <string name="save">SAVE</string>
-    <string name="start">START</string>
-    <string name="reset">RESET</string>
+    <string name="save">Save</string>
+    <string name="delete_all">Delete all</string>
+    <string name="reset_current">Reset current</string>
     <string name="stop">STOP</string>
     <string name="clean_audio">Clean Audio</string>
     <string name="enable_filter">Enable Filter</string>
