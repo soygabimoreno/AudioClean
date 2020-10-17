@@ -35,15 +35,12 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         initSpinner()
         initBtnSave()
-        initBtnReset()
+        initBtnPresets()
         initBtnDeleteAll()
+        initBtnReset()
         initTvDebugInfo()
         initSwitchFilter()
         initFaders()
-    }
-
-    private fun initTvDebugInfo() {
-        tvDebugInfo.setVisibleOrGone(BuildConfig.DEBUG)
     }
 
     private fun initViewModel() {
@@ -125,6 +122,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initBtnPresets() {
+        btnPreset1.setOnClickListener {
+            viewModel.onBtnPreset1clicked()
+        }
+        btnPreset2.setOnClickListener {
+            viewModel.onBtnPreset2clicked()
+        }
+        btnPreset3.setOnClickListener {
+            viewModel.onBtnPreset3clicked()
+        }
+    }
+
     private fun initBtnDeleteAll() {
         btnDeleteAll.setOnClickListener {
             viewModel.onDeleteAllClicked()
@@ -135,6 +144,10 @@ class MainActivity : AppCompatActivity() {
         btnReset.setOnClickListener {
             viewModel.resetFaders()
         }
+    }
+
+    private fun initTvDebugInfo() {
+        tvDebugInfo.setVisibleOrGone(BuildConfig.DEBUG)
     }
 
     private fun initSwitchFilter() {

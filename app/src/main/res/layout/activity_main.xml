@@ -29,26 +29,34 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:id="@+id/btnDeleteAll"
+        android:id="@+id/btnPreset1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/delete_all"
+        android:text="@string/preset_1"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/btnReset"
+        android:id="@+id/btnPreset2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/reset_current"
+        android:text="@string/preset_2"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
+        app:layout_constraintStart_toEndOf="@id/btnPreset1"/>
+
+    <Button
+        android:id="@+id/btnPreset3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/preset_3"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
+        app:layout_constraintStart_toEndOf="@id/btnPreset2"/>
 
     <LinearLayout
         android:id="@+id/llFaderViews"
@@ -69,6 +77,28 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llFaderViews"/>
+
+    <Button
+        android:id="@+id/btnDeleteAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/delete_all"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/btnReset"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/reset_current"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/tvDebugInfo"

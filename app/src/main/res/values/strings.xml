@@ -13,4 +13,7 @@
     <string name="max_number_of_saved_equalizations_reached">Maximum number of saved equalizations reached</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
+    <string name="preset_1">Preset 1</string>
+    <string name="preset_2">Preset 2</string>
+    <string name="preset_3">Preset 3</string>
 </resources>

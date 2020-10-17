@@ -96,6 +96,24 @@ class MainViewModel(
         _equalizations.value = list
     }
 
+    fun onBtnPreset1clicked() {
+        faders.forEach {
+            it.setGain(7)
+        }
+    }
+
+    fun onBtnPreset2clicked() {
+        faders.forEach {
+            it.setGain(-3)
+        }
+    }
+
+    fun onBtnPreset3clicked() {
+        faders.forEach {
+            it.setGain(10)
+        }
+    }
+
     fun onDeleteAllClicked() {
         equalizationDatasource.deleteAll()
         _equalizations.value = mutableListOf()
