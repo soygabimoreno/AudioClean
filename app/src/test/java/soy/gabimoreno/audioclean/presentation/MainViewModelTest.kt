@@ -15,6 +15,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import soy.gabimoreno.audioclean.data.analytics.AnalyticsTrackerComponent
+import soy.gabimoreno.audioclean.data.analytics.error.ErrorTrackerComponent
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
@@ -32,6 +34,8 @@ class MainViewModelTest {
     private val audioProcessor = mockk<AudioProcessor>(relaxed = true)
     private val equalizationDatasource = mockk<EqualizationDatasource>(relaxed = true)
     private val getEqualizationUseCase = mockk<GetEqualizationUseCase>(relaxed = true)
+    private val analyticsTrackerComponent = mockk<AnalyticsTrackerComponent>(relaxed = true)
+    private val errorTrackerComponent = mockk<ErrorTrackerComponent>(relaxed = true)
 
     @Before
     fun setUp() {
@@ -56,6 +60,8 @@ class MainViewModelTest {
             audioProcessor,
             equalizationDatasource,
             getEqualizationUseCase,
+            analyticsTrackerComponent,
+            errorTrackerComponent
         )
     }
 
