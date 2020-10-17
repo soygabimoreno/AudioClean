@@ -16,4 +16,6 @@
     <string name="preset_1">Preset 1</string>
     <string name="preset_2">Preset 2</string>
     <string name="preset_3">Preset 3</string>
+    <string name="disconnected_dialog_title">Steps</string>
+    <string name="disconnected_dialog_message">1. Close this app\n\n2. Open the other app and start there the meeting\n\n3. Open this app again</string>
 </resources>

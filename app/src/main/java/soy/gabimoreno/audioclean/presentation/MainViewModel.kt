@@ -10,6 +10,7 @@ import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
 import soy.gabimoreno.audioclean.framework.KLog
+import soy.gabimoreno.audioclean.presentation.analytics.MainEvents
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 
 class MainViewModel(
@@ -21,8 +22,8 @@ class MainViewModel(
 ) : ViewModel() {
 
     init {
-//        analyticsTrackerComponent.trackEvent(MainEvents.ScreenMain)
-//        errorTrackerComponent.trackError(Exception("Foo Exception"))
+        analyticsTrackerComponent.trackEvent(MainEvents.ScreenMain)
+        errorTrackerComponent.trackError(Exception("Foo Exception"))
     }
 
     private var _info = MutableLiveData<String>()

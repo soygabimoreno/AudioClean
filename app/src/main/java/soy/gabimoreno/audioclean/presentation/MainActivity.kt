@@ -11,10 +11,7 @@ import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.BuildConfig
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
-import soy.gabimoreno.audioclean.framework.extension.isFilled
-import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
-import soy.gabimoreno.audioclean.framework.extension.setVisibleOrGone
-import soy.gabimoreno.audioclean.framework.extension.toast
+import soy.gabimoreno.audioclean.framework.extension.*
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
@@ -48,11 +45,19 @@ class MainActivity : AppCompatActivity() {
             tvDebugInfo.text = "Audio Session Id: $info"
 
             if (info == "-1") {
+                AlertDialog.Builder(
+                    this@MainActivity
+                )
+                    .setTitle(R.string.disconnected_dialog_title)
+                    .setMessage(R.string.disconnected_dialog_message)
+                    .show()
+                switchFilter.disable()
                 tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
                 tvConnected.setText(R.string.disconnected)
                 tvConnected.typeface = Typeface.DEFAULT
-                tvConnected.setTextColor(resources.getColor(R.color.grayMedium, null))
+                tvConnected.setTextColor(resources.getColor(R.color.grayDark, null))
             } else {
+                switchFilter.enable()
                 tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
                 tvConnected.setText(R.string.connected)
                 tvConnected.typeface = Typeface.DEFAULT_BOLD

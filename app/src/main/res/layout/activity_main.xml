@@ -134,9 +134,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:enabled="false"
         android:text="@string/filter_disabled"
         android:textColor="@color/accent"
+        android:textColorHint="@color/green_alpha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:switchPadding="8dp"/>
+        app:switchPadding="8dp"
+        tools:enabled="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
