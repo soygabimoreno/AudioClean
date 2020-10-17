@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
@@ -10,9 +11,9 @@ android {
 
     signingConfigs {
         release {
+            keyAlias properties.getProperty('keystore.keyAlias')
             storeFile file(properties.getProperty('keystore.storeFile'))
             storePassword properties.getProperty('keystore.storePassword')
-            keyAlias properties.getProperty('keystore.keyAlias')
             keyPassword properties.getProperty('keystore.keyPassword')
         }
     }
@@ -79,5 +80,3 @@ dependencies {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
 }
-
-apply plugin: 'com.google.gms.google-services'
