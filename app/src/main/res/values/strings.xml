@@ -9,4 +9,5 @@
     <string name="equalization">Equalization</string>
     <string name="frequency_hz_amplitude_db">Frequency (Hz), Amplitude (dB)</string>
     <string name="processing_audio">Processing audio…</string>
+    <string name="max_number_of_saved_equalizations_reached">Maximum number of saved equalizations reached</string>
 </resources>

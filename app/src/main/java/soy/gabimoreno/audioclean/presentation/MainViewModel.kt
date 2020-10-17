@@ -93,6 +93,11 @@ class MainViewModel(
         _equalizations.value = list
     }
 
+    fun onDeleteAllClicked() {
+        equalizationDatasource.deleteAll()
+        _equalizations.value = listOf()
+    }
+
     fun resetFaders() {
         faders.forEach {
             it.setGain(0)

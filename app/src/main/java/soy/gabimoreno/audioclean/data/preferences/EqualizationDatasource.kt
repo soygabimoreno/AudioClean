@@ -58,8 +58,23 @@ class EqualizationDatasource(
         run loop@{
             Positions.values().forEach { equalizationDatasource ->
                 if (sharedPreferences.getString(equalizationDatasource.name, "") == "") {
-                    sharedPreferences.edit()
+                    sharedPreferences
+                        .edit()
                         .putString(equalizationDatasource.name, equalization.toJSONString())
+                        .apply()
+                    return@loop
+                }
+            }
+        }
+    }
+
+    fun deleteAll() {
+        run loop@{
+            Positions.values().forEach { equalizationDatasource ->
+                if (sharedPreferences.getString(equalizationDatasource.name, "") == "") {
+                    sharedPreferences
+                        .edit()
+                        .clear()
                         .apply()
                     return@loop
                 }

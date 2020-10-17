@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.R
+import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.framework.extension.isFilled
 import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
+import soy.gabimoreno.audioclean.framework.extension.toast
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         initSpinner()
         initBtnSave()
         initBtnReset()
+        initBtnDeleteAll()
         initCbAudioProcessor()
         initFaders()
     }
@@ -70,24 +73,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBtnSave() {
         btnSave.setOnClickListener {
-            val builder = AlertDialog.Builder(this@MainActivity)
-            builder.setTitle(R.string.equalization)
+            if (EqualizationDatasource.Positions.values().size < spinner.adapter.count) {
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setTitle(R.string.equalization)
 
-            val pattern = "yyyy-MM-dd HH:mm:ss"
-            val simpleDateFormat = SimpleDateFormat(pattern, Locale.US)
-            val date = simpleDateFormat.format(Date())
+                val pattern = "yyyy-MM-dd HH:mm:ss"
+                val simpleDateFormat = SimpleDateFormat(pattern, Locale.US)
+                val date = simpleDateFormat.format(Date())
 
-            val et = EditText(this)
-            et.setText(date.toString())
-            builder.setView(et)
+                val et = EditText(this)
+                et.setText(date.toString())
+                builder.setView(et)
 
-            builder.setPositiveButton(R.string.save) { _, _ ->
-                val equalizationName = et.text.toString()
-                if (equalizationName.isFilled()) {
-                    viewModel.saveEqualization(equalizationName)
+                builder.setPositiveButton(R.string.save) { _, _ ->
+                    val equalizationName = et.text.toString()
+                    if (equalizationName.isFilled()) {
+                        viewModel.saveEqualization(equalizationName)
+                    }
                 }
+                builder.show()
+            } else {
+                toast(R.string.max_number_of_saved_equalizations_reached)
             }
-            builder.show()
+        }
+    }
+
+    private fun initBtnDeleteAll() {
+        btnDeleteAll.setOnClickListener {
+            viewModel.onDeleteAllClicked()
         }
     }
 
