@@ -3,6 +3,8 @@ package soy.gabimoreno.audioclean.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import soy.gabimoreno.audioclean.data.analytics.AnalyticsTrackerComponent
+import soy.gabimoreno.audioclean.data.analytics.error.ErrorTrackerComponent
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
@@ -13,8 +15,15 @@ import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 class MainViewModel(
     private val audioProcessor: AudioProcessor,
     private val equalizationDatasource: EqualizationDatasource,
-    private val getEqualizationUseCase: GetEqualizationUseCase
+    private val getEqualizationUseCase: GetEqualizationUseCase,
+    private val analyticsTrackerComponent: AnalyticsTrackerComponent,
+    private val errorTrackerComponent: ErrorTrackerComponent
 ) : ViewModel() {
+
+    init {
+//        analyticsTrackerComponent.trackEvent(MainEvents.ScreenMain)
+//        errorTrackerComponent.trackError(Exception("Foo Exception"))
+    }
 
     private var _info = MutableLiveData<String>()
     val info: LiveData<String> = _info
