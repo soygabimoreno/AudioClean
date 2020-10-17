@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBtnSave() {
         btnSave.setOnClickListener {
-            if (EqualizationDatasource.Positions.values().size < spinner.adapter.count) {
+            if (viewModel.getNumberOfEqualizations() < EqualizationDatasource.Positions.values().size) {
                 val builder = AlertDialog.Builder(this@MainActivity)
                 builder.setTitle(R.string.equalization)
 

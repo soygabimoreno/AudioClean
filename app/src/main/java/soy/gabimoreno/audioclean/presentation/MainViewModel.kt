@@ -49,6 +49,8 @@ class MainViewModel(
     fun getFrequencies(): IntArray = audioProcessor.getFrequencies()
     fun getGains(): IntArray = audioProcessor.getGains()
 
+    fun getNumberOfEqualizations(): Int = equalizations.value?.size ?: 0
+
     fun setVolume(i: Int, gain: Int) {
         audioProcessor.setVolume(i, gain)
     }
