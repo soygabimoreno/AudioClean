@@ -9,4 +9,5 @@
     <string name="enable_filter">Enable Filter</string>
     <string name="equalization">Equalization</string>
     <string name="frequency_hz_amplitude_db">Frequency (Hz), Amplitude (dB)</string>
+    <string name="processing_audio">Processing audio…</string>
 </resources>

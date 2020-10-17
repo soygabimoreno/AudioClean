@@ -1,6 +1,5 @@
 package soy.gabimoreno.audioclean.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -97,14 +96,19 @@ class MainActivity : AppCompatActivity() {
             if (cbCleanAudio.isChecked) {
 //                viewModel.startProcessing()
 
-                val intent = Intent(this, AudioProcessorService::class.java)
-                intent.putExtra(AudioProcessorService.EXTRA_TEXT, "AudioClean Text")
-                startForegroundService(intent)
+                val frequencies = viewModel.getFrequencies()
+                val gains = viewModel.getGains()
+                val sb = StringBuilder()
+                frequencies.forEachIndexed { i, _ ->
+                    sb.append(frequencies[i].toString() + "Hz: " + gains[i].toString() + "dB\n")
+                }
+                val text = sb.toString()
+
+                AudioProcessorService.start(this, text)
             } else {
 //                viewModel.stopProcessing()
 
-                val intent = Intent(this, AudioProcessorService::class.java)
-                stopService(intent)
+                AudioProcessorService.stop(this)
             }
         }
     }

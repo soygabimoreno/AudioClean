@@ -3,6 +3,7 @@ package soy.gabimoreno.audioclean.service
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -15,7 +16,20 @@ import soy.gabimoreno.audioclean.presentation.MainActivity
 class AudioProcessorService : Service() {
 
     companion object {
-        const val EXTRA_TEXT = "EXTRA_TEXT"
+        private const val EXTRA_TEXT = "EXTRA_TEXT"
+
+        fun start(context: Context, text: String) {
+            context.startForegroundService(
+                Intent(context, AudioProcessorService::class.java).apply {
+                    putExtra(EXTRA_TEXT, text)
+                })
+        }
+
+        fun stop(context: Context) {
+            context.stopService(
+                Intent(context, AudioProcessorService::class.java)
+            )
+        }
     }
 
     private val audioProcessor: AudioProcessor by inject()
@@ -25,15 +39,14 @@ class AudioProcessorService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val text = intent?.getStringExtra(EXTRA_TEXT) ?: "Unknown Text"
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
-            notificationIntent,
+            Intent(this, MainActivity::class.java),
             0
         )
         val notification: Notification = NotificationCompat.Builder(this, App.CHANNEL_ID)
-            .setContentTitle("AudioClean Service")
+            .setContentTitle(getString(R.string.processing_audio))
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_baseline_audiotrack_24)
             .setContentIntent(pendingIntent)
