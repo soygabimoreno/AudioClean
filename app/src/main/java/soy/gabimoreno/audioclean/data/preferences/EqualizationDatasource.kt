@@ -69,16 +69,9 @@ class EqualizationDatasource(
     }
 
     fun deleteAll() {
-        run loop@{
-            Positions.values().forEach { equalizationDatasource ->
-                if (sharedPreferences.getString(equalizationDatasource.name, "") == "") {
-                    sharedPreferences
-                        .edit()
-                        .clear()
-                        .apply()
-                    return@loop
-                }
-            }
-        }
+        sharedPreferences
+            .edit()
+            .clear()
+            .apply()
     }
 }

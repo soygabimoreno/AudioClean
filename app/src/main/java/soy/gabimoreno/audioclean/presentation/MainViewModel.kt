@@ -32,7 +32,7 @@ class MainViewModel(
         audioProcessor.init()
 
         _equalizations.value = mutableListOf()
-        _currentEqualizationPosition.value = 0 // TODO: 0 -> Current position
+        _currentEqualizationPosition.value = 0
         loadAllEqualizations()
     }
 
@@ -92,12 +92,13 @@ class MainViewModel(
 
         val list = _equalizations.value as MutableList<Equalization>
         list.add(equalization)
+        _currentEqualizationPosition.value = list.size - 1
         _equalizations.value = list
     }
 
     fun onDeleteAllClicked() {
         equalizationDatasource.deleteAll()
-        _equalizations.value = listOf()
+        _equalizations.value = mutableListOf()
     }
 
     fun resetFaders() {

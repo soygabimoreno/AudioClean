@@ -44,13 +44,14 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.equalizations.observe(this, { equalizations ->
+            val currentEqualizationPosition = viewModel.currentEqualizationPosition.value!!
             if (equalizations.isNotEmpty()) {
                 if (showDialogToTheUser) {
                     AlertDialog.Builder(
                         this@MainActivity
                     )
                         .setTitle(R.string.equalization)
-                        .setMessage(equalizations[viewModel.currentEqualizationPosition.value!!].toString())
+                        .setMessage(equalizations[currentEqualizationPosition].toString())
                         .show()
                 }
                 showDialogToTheUser = true
@@ -62,6 +63,12 @@ class MainActivity : AppCompatActivity() {
                 equalizations.map { it.name }
             )
             spinner.adapter = adapter
+
+            spinner.setSelection(currentEqualizationPosition)
+        })
+
+        viewModel.currentEqualizationPosition.observe(this, { currentEqualizationPosition ->
+            spinner.setSelection(currentEqualizationPosition)
         })
     }
 
