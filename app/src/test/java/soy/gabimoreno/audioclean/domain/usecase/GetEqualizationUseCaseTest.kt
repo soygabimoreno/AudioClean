@@ -18,7 +18,7 @@ class GetEqualizationUseCaseTest {
         val gains = intArrayOf(gain0, gain1, gain2)
 
         val getEqualizationUseCase = GetEqualizationUseCase()
-        val equalization = getEqualizationUseCase(frequencies, gains)
+        val equalization = getEqualizationUseCase("foo", frequencies, gains)
 
         val frequencyGains = equalization.frequencyGains
         assertTrue(freq0 == frequencyGains[0].frequency)
