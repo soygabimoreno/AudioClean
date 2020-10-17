@@ -1,5 +1,6 @@
 package soy.gabimoreno.audioclean.presentation
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -7,10 +8,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
+import soy.gabimoreno.audioclean.BuildConfig
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.framework.extension.isFilled
 import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
+import soy.gabimoreno.audioclean.framework.extension.setVisibleOrGone
 import soy.gabimoreno.audioclean.framework.extension.toast
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
@@ -34,13 +37,30 @@ class MainActivity : AppCompatActivity() {
         initBtnSave()
         initBtnReset()
         initBtnDeleteAll()
-        initCbAudioProcessor()
+        initTvDebugInfo()
+        initSwitchFilter()
         initFaders()
+    }
+
+    private fun initTvDebugInfo() {
+        tvDebugInfo.setVisibleOrGone(BuildConfig.DEBUG)
     }
 
     private fun initViewModel() {
         viewModel.info.observe(this, { info ->
-            tvInfo.text = "Audio Session Id: $info"
+            tvDebugInfo.text = "Audio Session Id: $info"
+
+            if (info == "-1") {
+                tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
+                tvConnected.setText(R.string.disconnected)
+                tvConnected.typeface = Typeface.DEFAULT
+                tvConnected.setTextColor(resources.getColor(R.color.grayMedium, null))
+            } else {
+                tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
+                tvConnected.setText(R.string.connected)
+                tvConnected.typeface = Typeface.DEFAULT_BOLD
+                tvConnected.setTextColor(resources.getColor(R.color.accent, null))
+            }
         })
 
         viewModel.equalizations.observe(this, { equalizations ->
@@ -117,10 +137,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initCbAudioProcessor() {
-        cbCleanAudio.setOnClickListener {
-            if (cbCleanAudio.isChecked) {
-//                viewModel.startProcessing()
+    private fun initSwitchFilter() {
+        switchFilter.setOnCheckedChangeListener { _, filterEnabled ->
+            if (filterEnabled) {
+                switchFilter.setText(R.string.filter_enabled)
+                switchFilter.typeface = Typeface.DEFAULT_BOLD
+                //                viewModel.startProcessing()
 
                 val frequencies = viewModel.getFrequencies()
                 val gains = viewModel.getGains()
@@ -132,7 +154,9 @@ class MainActivity : AppCompatActivity() {
 
                 AudioProcessorService.start(this, text)
             } else {
-//                viewModel.stopProcessing()
+                switchFilter.setText(R.string.filter_disabled)
+                switchFilter.typeface = Typeface.DEFAULT
+                //                viewModel.stopProcessing()
 
                 AudioProcessorService.stop(this)
             }

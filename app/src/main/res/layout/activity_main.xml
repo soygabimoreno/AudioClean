@@ -66,26 +66,47 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/frequency_hz_amplitude_db"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llFaderViews"/>
 
     <TextView
-        android:id="@+id/tvInfo"
+        android:id="@+id/tvDebugInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cbCleanAudio"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvConnected"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Audio Session Id: 4321"/>
+        tools:text="Audio Session Id: 4321"
+        tools:visibility="visible"/>
 
-    <CheckBox
-        android:id="@+id/cbCleanAudio"
+    <TextView
+        android:id="@+id/tvConnected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/enable_filter"
+        android:background="@drawable/bg_tv_disconnected"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/switchFilter"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@drawable/bg_tv_connected"
+        tools:text="Connected"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchFilter"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/filter_disabled"
+        android:textColor="@color/accent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:switchPadding="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

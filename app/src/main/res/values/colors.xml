@@ -6,6 +6,9 @@
     <color name="light">#fcbf1e</color>
     <color name="accent">#120136</color>
     <color name="grayLight">#CCCCCC</color>
+    <color name="grayLight_alpha">#50CCCCCC</color>
     <color name="grayMedium">#888888</color>
     <color name="grayDark">#444444</color>
+
+    <color name="green_alpha">#5000FF00</color>
 </resources>
