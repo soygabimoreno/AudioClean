@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by koinScope.viewModel(this)
 
+    @Deprecated("This is a patch for not showing the dialog the first time")
+    private var showDialogToTheUser = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,12 +42,15 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.equalizations.observe(this, { equalizations ->
             if (equalizations.isNotEmpty()) {
-                AlertDialog.Builder(
-                    this@MainActivity
-                )
-                    .setTitle(R.string.equalization)
-                    .setMessage(equalizations[viewModel.currentEqualizationPosition.value!!].toString())
-                    .show()
+                if (showDialogToTheUser) {
+                    AlertDialog.Builder(
+                        this@MainActivity
+                    )
+                        .setTitle(R.string.equalization)
+                        .setMessage(equalizations[viewModel.currentEqualizationPosition.value!!].toString())
+                        .show()
+                }
+                showDialogToTheUser = true
             }
 
             val adapter = ArrayAdapter(
