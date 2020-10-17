@@ -14,9 +14,16 @@ class EqualizationDatasource(
 ) {
 
     enum class Positions {
-        ZERO,
-        ONE,
-        TWO
+        POSITION_0,
+        POSITION_1,
+        POSITION_2,
+        POSITION_3,
+        POSITION_4,
+        POSITION_5,
+        POSITION_6,
+        POSITION_7,
+        POSITION_8,
+        POSITION_9
     }
 
     private val gson: Gson by lazy { Gson() }
