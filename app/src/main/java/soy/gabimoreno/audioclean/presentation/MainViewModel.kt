@@ -23,7 +23,6 @@ class MainViewModel(
 
     init {
         analyticsTrackerComponent.trackEvent(MainEvents.ScreenMain)
-        errorTrackerComponent.trackError(Exception("Foo Exception"))
     }
 
     private var _info = MutableLiveData<String>()
@@ -83,6 +82,7 @@ class MainViewModel(
         equalizationDatasource.loadAll()
             .fold({
                 KLog.e("Error when trying to load all the equalizations")
+                errorTrackerComponent.trackError(it)
             }, { equalizations ->
                 _equalizations.value = equalizations
             })
@@ -92,6 +92,7 @@ class MainViewModel(
         equalizationDatasource.load(EqualizationDatasource.Positions.values()[position])
             .fold({
                 KLog.e("Error loading equalization")
+                errorTrackerComponent.trackError(it)
             }, { equalization ->
                 faders.forEachIndexed { i, fader ->
                     fader.setGain(equalization.frequencyGains[i].gain)

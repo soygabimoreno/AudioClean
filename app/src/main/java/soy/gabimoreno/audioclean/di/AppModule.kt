@@ -19,7 +19,12 @@ import soy.gabimoreno.audioclean.presentation.MainViewModel
 
 val appModule = module {
     single<UserSession> { DefaultUserSession() }
-    single { GetActiveRecordingConfigurations(context = androidContext()) }
+    single {
+        GetActiveRecordingConfigurations(
+            context = androidContext(),
+            errorTrackerComponent = get()
+        )
+    }
     single { GetAudioSessionIdUseCase(getActiveRecordingConfigurations = get()) }
     single { GetEqualizationUseCase() }
     single<Equalization> { VoiceManEqualization().get() }
