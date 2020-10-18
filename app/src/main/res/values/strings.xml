@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Meet Equalizer</string>
+    <string name="app_name">AudioClean</string>
     <string name="save">Save</string>
     <string name="delete_all">Delete all</string>
     <string name="reset_current">Reset current</string>
@@ -29,6 +29,6 @@
 
     <string name="email_title">Select email</string>
     <string name="email_to">contact@appacoustic.com</string>
-    <string name="email_subject">EMAIL FROM MEET EQUALIZER APP</string>
+    <string name="email_subject">EMAIL FROM AUDIOCLEAN APP</string>
     <string name="email_text">Feel free to send feedback, asking or suggesting anything.\nWe really appreciate it! ☺️\n---\n</string>
 </resources>
