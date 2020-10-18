@@ -46,6 +46,35 @@ class MainViewModel(
         loadAllEqualizations()
     }
 
+    // TODO: After using the base view model
+//    fun handleShareClicked() {
+//        viewModelScope.launch {
+//            analyticsTrackerComponent.trackEvent(MainEvents.ClickShare)
+//            sendViewEvent(ViewEvents.Share)
+//        }
+//    }
+//
+//    fun handleEmailClicked() {
+//        viewModelScope.launch {
+//            analyticsTrackerComponent.trackEvent(MainEvents.ClickEmail)
+//            sendViewEvent(ViewEvents.SendEmail)
+//        }
+//    }
+//
+//    fun handleRateClicked() {
+//        viewModelScope.launch {
+//            analyticsTrackerComponent.trackEvent(MainEvents.ClickRate)
+//            sendViewEvent(ViewEvents.Rate)
+//        }
+//    }
+//
+//    fun handleInfoClicked() {
+//        viewModelScope.launch {
+//            analyticsTrackerComponent.trackEvent(MainEvents.ClickInfo)
+//            sendViewEvent(ViewEvents.NavigateToWeb("http://appacoustic.com"))
+//        }
+//    }
+
     private val faders = mutableListOf<Fader>()
 
     fun startProcessing() {
@@ -114,20 +143,21 @@ class MainViewModel(
     }
 
     fun onBtnPreset1clicked() {
-        faders.forEach {
-            it.setGain(7)
-        }
+        resetFaders()
+        faders[5].setGain(2)
+        faders[6].setGain(4)
+        faders[7].setGain(2)
     }
 
     fun onBtnPreset2clicked() {
-        faders.forEach {
-            it.setGain(-3)
-        }
+        resetFaders()
+        faders[0].setGain(-6)
+        faders[1].setGain(-6)
     }
 
     fun onBtnPreset3clicked() {
         faders.forEach {
-            it.setGain(10)
+            it.setGain(7)
         }
     }
 

@@ -1,11 +1,17 @@
 package soy.gabimoreno.audioclean.presentation
 
+import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.scope.viewModel
 import soy.gabimoreno.audioclean.BuildConfig
@@ -43,6 +49,85 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         viewModel.releaseProcessing()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menuShare -> {
+//                viewModel.handleShareClicked()
+                share()
+                true
+            }
+            R.id.menuEmail -> {
+//                viewModel.handleEmailClicked()
+                sendEmail()
+                true
+            }
+            R.id.menuRate -> {
+//                viewModel.handleRateClicked()
+                rate()
+                true
+            }
+            R.id.menuInfo -> {
+//                viewModel.handleInfoClicked()
+                navigateToWeb("http://appacoustic.com")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun share() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_title))
+        startActivity(shareIntent)
+    }
+
+    private fun sendEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_to)))
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject))
+        startActivity(Intent.createChooser(intent, getString(R.string.email_title)))
+    }
+
+    private fun rate() {
+        val appPackageName = if (BuildConfig.DEBUG) "soy.gabimoreno.audioclean" else packageName
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+        } catch (exception: Exception) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+        }
+    }
+
+    private fun navigateToWeb(uriString: String) {
+        CustomTabsIntent.Builder()
+            .setStartAnimations(
+                this,
+                R.anim.browser_in_right,
+                R.anim.browser_out_left
+            )
+            .setExitAnimations(
+                this,
+                R.anim.browser_in_left,
+                R.anim.browser_out_right
+            )
+            .build()
+            .launchUrl(
+                this,
+                Uri.parse(uriString)
+            )
     }
 
     private fun initViewModel() {

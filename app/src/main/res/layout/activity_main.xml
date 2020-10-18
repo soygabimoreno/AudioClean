@@ -28,35 +28,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
-        android:id="@+id/btnPreset1"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/nsvPresets"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/preset_1"
-        android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/llFaderViews"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner">
 
-    <Button
-        android:id="@+id/btnPreset2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/preset_2"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
-        app:layout_constraintStart_toEndOf="@id/btnPreset1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnPreset3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/preset_3"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
-        app:layout_constraintStart_toEndOf="@id/btnPreset2"/>
+            <Button
+                android:id="@+id/btnPreset1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/preset_1"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnPreset2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/preset_2"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnPreset3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/preset_3"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:id="@+id/llFaderViews"
@@ -64,10 +73,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:rotation="-90"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnDeleteAll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/nsvPresets"/>
 
     <TextView
         android:layout_width="wrap_content"

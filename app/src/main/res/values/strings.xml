@@ -13,9 +13,22 @@
     <string name="max_number_of_saved_equalizations_reached">Maximum number of saved equalizations reached</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
-    <string name="preset_1">Preset 1</string>
-    <string name="preset_2">Preset 2</string>
-    <string name="preset_3">Preset 3</string>
+    <string name="preset_1">Clear Voice</string>
+    <string name="preset_2">Filter Noise</string>
+    <string name="preset_3">Pump up the volume</string>
     <string name="disconnected_dialog_title">Steps</string>
     <string name="disconnected_dialog_message">1. Close this app\n\n2. Open the other app and start there the meeting\n\n3. Open this app again</string>
+
+    <string name="menu_share">Share the app</string>
+    <string name="menu_email">Send an email</string>
+    <string name="menu_rate">Rate the app</string>
+    <string name="menu_info">Info</string>
+
+    <string name="share_title">Share the app</string>
+    <string name="share_text">Check this app for improving the audio of the meetings. It is awesome! 🙂\nhttps://play.google.com/store/apps/details?id=soy.gabimoreno.audioclean</string>
+
+    <string name="email_title">Select email</string>
+    <string name="email_to">contact@appacoustic.com</string>
+    <string name="email_subject">EMAIL FROM MEET EQUALIZER APP</string>
+    <string name="email_text">Feel free to send feedback, asking or suggesting anything.\nWe really appreciate it! ☺️\n---\n</string>
 </resources>

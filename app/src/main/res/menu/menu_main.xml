@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuShare"
+        android:icon="@drawable/ic_menu_share_24"
+        android:title="@string/menu_share"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menuEmail"
+        android:icon="@drawable/ic_menu_email_24"
+        android:title="@string/menu_email"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menuRate"
+        android:icon="@drawable/ic_menu_rate_24"
+        android:title="@string/menu_rate"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menuInfo"
+        android:icon="@drawable/ic_menu_info_24"
+        android:title="@string/menu_info"
+        app:showAsAction="ifRoom"/>
+</menu>
