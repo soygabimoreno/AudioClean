@@ -40,6 +40,11 @@ class MainActivity : AppCompatActivity() {
         initFaders()
     }
 
+    override fun onDestroy() {
+        viewModel.releaseProcessing()
+        super.onDestroy()
+    }
+
     private fun initViewModel() {
         viewModel.info.observe(this, { info ->
             tvDebugInfo.text = "Audio Session Id: $info"

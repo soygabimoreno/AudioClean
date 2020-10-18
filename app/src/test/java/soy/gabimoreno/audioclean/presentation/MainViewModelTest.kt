@@ -55,6 +55,16 @@ class MainViewModelTest {
         verify(exactly = 1) { audioProcessor.init() }
     }
 
+    @Test
+    fun `if releaseProcessing is called, then audioProcessor release is triggered`() {
+        givenAllEqualizations()
+        val viewModel = buildViewModel()
+
+        viewModel.releaseProcessing()
+
+        verify(exactly = 1) { audioProcessor.release() }
+    }
+
     private fun buildViewModel(): MainViewModel {
         return MainViewModel(
             audioProcessor,

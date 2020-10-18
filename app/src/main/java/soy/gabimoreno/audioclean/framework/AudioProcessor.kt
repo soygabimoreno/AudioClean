@@ -117,6 +117,12 @@ class AudioProcessor(
         }
     }
 
+    fun release() {
+        if (initialized) {
+            dynamicsProcessing.release()
+        }
+    }
+
     private fun setBandGain(position: Int, level: Int) {
         if (initialized) {
             gains[position] = level

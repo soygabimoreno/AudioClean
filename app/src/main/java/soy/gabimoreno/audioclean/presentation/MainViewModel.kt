@@ -56,6 +56,10 @@ class MainViewModel(
         audioProcessor.stop()
     }
 
+    fun releaseProcessing() {
+        audioProcessor.release()
+    }
+
     fun getFrequencies(): IntArray = audioProcessor.getFrequencies()
     fun getGains(): IntArray = audioProcessor.getGains()
 
