@@ -1,11 +1,10 @@
-### :tophat: What is the goal?
+# :tophat: What is the goal?
 
 
 
-### :memo: How is it being implemented?
+### :memo: How is it implemented?
 
 
 
 ### :boom: How can it be tested?
-
 
