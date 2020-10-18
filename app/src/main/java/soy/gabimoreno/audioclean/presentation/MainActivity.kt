@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 builder.setPositiveButton(R.string.save) { _, _ ->
                     val equalizationName = et.text.toString()
                     if (equalizationName.isFilled()) {
-                        viewModel.saveEqualization(equalizationName)
+                        viewModel.onSaveEqualizationClicked(equalizationName)
                     }
                 }
                 builder.show()

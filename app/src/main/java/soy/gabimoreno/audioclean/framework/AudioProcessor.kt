@@ -41,7 +41,7 @@ class AudioProcessor(
     private val multiBandCompressorBandCount = nBands
     private val postEqBandCount = nBands
 
-    private lateinit var listener: (Int) -> Unit
+    private lateinit var listener: (audioSessionId: Int) -> Unit
     private var initialized = false
 
     fun init() {
@@ -91,7 +91,7 @@ class AudioProcessor(
         }
     }
 
-    fun setListener(listener: (Int) -> Unit) {
+    fun setListener(listener: (audioSessionId: Int) -> Unit) {
         this.listener = listener
     }
 

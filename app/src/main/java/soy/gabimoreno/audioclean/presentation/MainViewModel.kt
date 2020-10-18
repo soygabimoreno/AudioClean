@@ -36,8 +36,9 @@ class MainViewModel(
     val currentEqualizationPosition = _currentEqualizationPosition
 
     init {
-        audioProcessor.setListener {
-            _info.value = it.toString()
+        audioProcessor.setListener { audioSessionId ->
+            _info.value = audioSessionId.toString()
+            analyticsTrackerComponent.trackEvent(MainEvents.DataAudioSession(audioSessionId))
         }
         audioProcessor.init()
 
@@ -98,7 +99,7 @@ class MainViewModel(
             })
     }
 
-    fun saveEqualization(equalizationName: String) {
+    fun onSaveEqualizationClicked(equalizationName: String) {
         val frequencies = faders.map { it.frequency }.toIntArray()
         val gains = faders.map { it.getGain() }.toIntArray()
         val equalization = getEqualizationUseCase(equalizationName, frequencies, gains)
