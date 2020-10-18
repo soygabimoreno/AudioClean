@@ -21,13 +21,19 @@ import soy.gabimoreno.audioclean.data.analytics.AnalyticsTrackerComponent
 import soy.gabimoreno.audioclean.data.analytics.error.ErrorTrackerComponent
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.domain.Equalization
+import soy.gabimoreno.audioclean.domain.FrequencyGain
 import soy.gabimoreno.audioclean.domain.usecase.GetAudioSessionIdUseCase
 import soy.gabimoreno.audioclean.domain.usecase.GetEqualizationUseCase
 import soy.gabimoreno.audioclean.framework.AudioProcessor
+import soy.gabimoreno.audioclean.infrastructure.InfrastructureKeys
 import soy.gabimoreno.audioclean.presentation.analytics.MainEvents
 
 @ExperimentalCoroutinesApi
 class MainViewModelTest {
+
+    companion object {
+        private const val EQUALIZATION_NAME = "Equalization Name"
+    }
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -74,12 +80,45 @@ class MainViewModelTest {
 
         val slot = slot<MainEvents.DataAudioSession>()
         verify(exactly = 1) { analyticsTrackerComponent.trackEvent(capture(slot)) }
-        assertTrue(-1 == slot.captured.parameters["AUDIO_SESSION_ID"])
+        assertTrue(-1 == slot.captured.parameters[InfrastructureKeys.AUDIO_SESSION_ID])
+    }
+
+    @Test
+    fun `when an equalization is saved, then its analytics event is triggered`() {
+        givenEqualization()
+        val viewModel = buildViewModel()
+
+        val equalizationName = EQUALIZATION_NAME
+        viewModel.onSaveEqualizationClicked(equalizationName)
+
+        val slot = slot<MainEvents.ClickSaveEqualization>()
+        verify(exactly = 1) { analyticsTrackerComponent.trackEvent(capture(slot)) }
+        assertTrue(slot.captured.parameters[InfrastructureKeys.EQUALIZATION].toString().contains(equalizationName))
     }
 
     private fun givenAllEqualizations() {
-        every { equalizationDatasource.loadAll() } returns listOf<Equalization>().right()
+        every { equalizationDatasource.loadAll() } returns mutableListOf(buildEqualization()).right()
     }
+
+    private fun givenEqualization() {
+        every { getEqualizationUseCase(any(), any(), any()) } returns buildEqualization()
+    }
+
+    private fun buildEqualization() = Equalization(
+        name = EQUALIZATION_NAME,
+        listOf(
+            FrequencyGain(31, 0),
+            FrequencyGain(62, 0),
+            FrequencyGain(125, 0),
+            FrequencyGain(250, 0),
+            FrequencyGain(500, 0),
+            FrequencyGain(1000, 0),
+            FrequencyGain(2000, 0),
+            FrequencyGain(4000, 0),
+            FrequencyGain(8000, 0),
+            FrequencyGain(16000, 0)
+        )
+    )
 
     private fun buildViewModel(): MainViewModel {
         return MainViewModel(

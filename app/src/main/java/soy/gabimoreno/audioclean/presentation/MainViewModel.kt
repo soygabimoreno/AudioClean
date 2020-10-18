@@ -104,6 +104,7 @@ class MainViewModel(
         val gains = faders.map { it.getGain() }.toIntArray()
         val equalization = getEqualizationUseCase(equalizationName, frequencies, gains)
         equalizationDatasource.save(equalization)
+        analyticsTrackerComponent.trackEvent(MainEvents.ClickSaveEqualization(equalization))
 
         val list = _equalizations.value as MutableList<Equalization>
         list.add(equalization)
