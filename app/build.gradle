@@ -25,7 +25,7 @@ android {
         applicationId "soy.gabimoreno.audioclean"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 9
+        versionCode 11
         versionName "0.4.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
