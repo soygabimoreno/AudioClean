@@ -13,12 +13,12 @@ class RemoteConfig(
 ) {
 
     companion object {
-        private const val AMPLITUDE_API_KEY = "AMPLITUDE_API_KEY"
+        private const val AMPLITUDE_API_KEY_AUDIO_CLEAN = "AMPLITUDE_API_KEY_AUDIO_CLEAN"
     }
 
     init {
         val defaults = mapOf(
-            AMPLITUDE_API_KEY to ""
+            AMPLITUDE_API_KEY_AUDIO_CLEAN to ""
         )
 
         val configSettings = remoteConfigSettings {
@@ -34,6 +34,6 @@ class RemoteConfig(
     }
 
     suspend fun getAmplitudeApiKey(): Either<Throwable, String> = withContext(Dispatchers.IO) {
-        Either.catch { firebaseRemoteConfig.getString(AMPLITUDE_API_KEY) }
+        Either.catch { firebaseRemoteConfig.getString(AMPLITUDE_API_KEY_AUDIO_CLEAN) }
     }
 }
