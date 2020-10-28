@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "soy.gabimoreno.audioclean"
-        minSdkVersion 26
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 13
         versionName "0.4.0"
