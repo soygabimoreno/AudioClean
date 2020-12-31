@@ -85,3 +85,6 @@ lint/tmp/
 # lint/reports/
 /.idea/
 /app/src/main/res/raw/my_demo.mp3
+
+# API Keys
+app/src/main/cpp/api-keys.cpp
