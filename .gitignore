@@ -88,3 +88,4 @@ lint/tmp/
 
 # API Keys
 app/src/main/cpp/api-keys.cpp
+/app/.cxx/*

@@ -10,10 +10,10 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.scope.viewModel
+import org.koin.androidx.scope.ScopeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import soy.gabimoreno.audioclean.BuildConfig
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
@@ -23,11 +23,10 @@ import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
 import java.text.SimpleDateFormat
 import java.util.*
-import org.koin.androidx.scope.lifecycleScope as koinScope
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ScopeActivity() {
 
-    private val viewModel: MainViewModel by koinScope.viewModel(this)
+    private val viewModel: MainViewModel by viewModel()
 
     @Deprecated("This is a patch for not showing the dialog the first time")
     private var showDialogToTheUser = false
@@ -53,7 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(
+            R.menu.menu_main,
+            menu
+        )
         return true
     }
 
@@ -86,28 +88,55 @@ class MainActivity : AppCompatActivity() {
     private fun share() {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text))
+            putExtra(
+                Intent.EXTRA_TEXT,
+                getString(R.string.share_text)
+            )
             type = "text/plain"
         }
 
-        val shareIntent = Intent.createChooser(sendIntent, getString(R.string.share_title))
+        val shareIntent = Intent.createChooser(
+            sendIntent,
+            getString(R.string.share_title)
+        )
         startActivity(shareIntent)
     }
 
     private fun sendEmail() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_to)))
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject))
-        startActivity(Intent.createChooser(intent, getString(R.string.email_title)))
+        intent.putExtra(
+            Intent.EXTRA_EMAIL,
+            arrayOf(getString(R.string.email_to))
+        )
+        intent.putExtra(
+            Intent.EXTRA_SUBJECT,
+            getString(R.string.email_subject)
+        )
+        startActivity(
+            Intent.createChooser(
+                intent,
+                getString(R.string.email_title)
+            )
+        )
     }
 
     private fun rate() {
         val appPackageName = if (BuildConfig.DEBUG) "soy.gabimoreno.audioclean" else packageName
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$appPackageName")
+                )
+            )
         } catch (exception: Exception) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
+            )
         }
     }
 
@@ -131,57 +160,73 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.info.observe(this, { info ->
-            tvDebugInfo.text = "Audio Session Id: $info"
+        viewModel.info.observe(
+            this,
+            { info ->
+                tvDebugInfo.text = "Audio Session Id: $info"
 
-            if (info == "-1") {
-                AlertDialog.Builder(
-                    this@MainActivity
-                )
-                    .setTitle(R.string.disconnected_dialog_title)
-                    .setMessage(R.string.disconnected_dialog_message)
-                    .show()
-                switchFilter.disable()
-                tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
-                tvConnected.setText(R.string.disconnected)
-                tvConnected.typeface = Typeface.DEFAULT
-                tvConnected.setTextColor(resources.getColor(R.color.grayDark, null))
-            } else {
-                switchFilter.enable()
-                tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
-                tvConnected.setText(R.string.connected)
-                tvConnected.typeface = Typeface.DEFAULT_BOLD
-                tvConnected.setTextColor(resources.getColor(R.color.accent, null))
-            }
-        })
-
-        viewModel.equalizations.observe(this, { equalizations ->
-            val currentEqualizationPosition = viewModel.currentEqualizationPosition.value!!
-            if (equalizations.isNotEmpty()) {
-                if (showDialogToTheUser) {
+                if (info == "-1") {
                     AlertDialog.Builder(
                         this@MainActivity
                     )
-                        .setTitle(R.string.equalization)
-                        .setMessage(equalizations[currentEqualizationPosition].toString())
+                        .setTitle(R.string.disconnected_dialog_title)
+                        .setMessage(R.string.disconnected_dialog_message)
                         .show()
+                    switchFilter.disable()
+                    tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
+                    tvConnected.setText(R.string.disconnected)
+                    tvConnected.typeface = Typeface.DEFAULT
+                    tvConnected.setTextColor(
+                        resources.getColor(
+                            R.color.grayDark,
+                            null
+                        )
+                    )
+                } else {
+                    switchFilter.enable()
+                    tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
+                    tvConnected.setText(R.string.connected)
+                    tvConnected.typeface = Typeface.DEFAULT_BOLD
+                    tvConnected.setTextColor(
+                        resources.getColor(
+                            R.color.accent,
+                            null
+                        )
+                    )
                 }
-                showDialogToTheUser = true
-            }
+            })
 
-            val adapter = ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                equalizations.map { it.name }
-            )
-            spinner.adapter = adapter
+        viewModel.equalizations.observe(
+            this,
+            { equalizations ->
+                val currentEqualizationPosition = viewModel.currentEqualizationPosition.value!!
+                if (equalizations.isNotEmpty()) {
+                    if (showDialogToTheUser) {
+                        AlertDialog.Builder(
+                            this@MainActivity
+                        )
+                            .setTitle(R.string.equalization)
+                            .setMessage(equalizations[currentEqualizationPosition].toString())
+                            .show()
+                    }
+                    showDialogToTheUser = true
+                }
 
-            spinner.setSelection(currentEqualizationPosition)
-        })
+                val adapter = ArrayAdapter(
+                    this,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    equalizations.map { it.name }
+                )
+                spinner.adapter = adapter
 
-        viewModel.currentEqualizationPosition.observe(this, { currentEqualizationPosition ->
-            spinner.setSelection(currentEqualizationPosition)
-        })
+                spinner.setSelection(currentEqualizationPosition)
+            })
+
+        viewModel.currentEqualizationPosition.observe(
+            this,
+            { currentEqualizationPosition ->
+                spinner.setSelection(currentEqualizationPosition)
+            })
     }
 
     private fun initSpinner() {
@@ -197,7 +242,10 @@ class MainActivity : AppCompatActivity() {
                 builder.setTitle(R.string.equalization)
 
                 val pattern = "yyyy-MM-dd HH:mm:ss"
-                val simpleDateFormat = SimpleDateFormat(pattern, Locale.US)
+                val simpleDateFormat = SimpleDateFormat(
+                    pattern,
+                    Locale.US
+                )
                 val date = simpleDateFormat.format(Date())
 
                 val et = EditText(this)
@@ -260,7 +308,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 val text = sb.toString()
 
-                AudioProcessorService.start(this, text)
+                AudioProcessorService.start(
+                    this,
+                    text
+                )
             } else {
                 switchFilter.setText(R.string.filter_disabled)
                 switchFilter.typeface = Typeface.DEFAULT
@@ -277,7 +328,12 @@ class MainActivity : AppCompatActivity() {
         frequencies.forEachIndexed { i, _ ->
             val faderView = FaderView(this)
             llFaderViews.addView(faderView)
-            val fader = Fader(faderView, i, frequencies[i], gains[i])
+            val fader = Fader(
+                faderView,
+                i,
+                frequencies[i],
+                gains[i]
+            )
             viewModel.addFader(fader)
         }
     }
