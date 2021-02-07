@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import soy.gabimoreno.audioclean.BuildConfig
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
+import soy.gabimoreno.audioclean.databinding.ActivityMainBinding
 import soy.gabimoreno.audioclean.framework.extension.*
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
@@ -31,9 +31,12 @@ class MainActivity : ScopeActivity() {
     @Deprecated("This is a patch for not showing the dialog the first time")
     private var showDialogToTheUser = false
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViewModel()
         initSpinner()
         initBtnSave()
@@ -163,7 +166,7 @@ class MainActivity : ScopeActivity() {
         viewModel.info.observe(
             this,
             { info ->
-                tvDebugInfo.text = "Audio Session Id: $info"
+                binding.tvDebugInfo.text = "Audio Session Id: $info"
 
                 if (info == "-1") {
                     AlertDialog.Builder(
@@ -172,22 +175,22 @@ class MainActivity : ScopeActivity() {
                         .setTitle(R.string.disconnected_dialog_title)
                         .setMessage(R.string.disconnected_dialog_message)
                         .show()
-                    switchFilter.disable()
-                    tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
-                    tvConnected.setText(R.string.disconnected)
-                    tvConnected.typeface = Typeface.DEFAULT
-                    tvConnected.setTextColor(
+                    binding.switchFilter.disable()
+                    binding.tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
+                    binding.tvConnected.setText(R.string.disconnected)
+                    binding.tvConnected.typeface = Typeface.DEFAULT
+                    binding.tvConnected.setTextColor(
                         resources.getColor(
                             R.color.grayDark,
                             null
                         )
                     )
                 } else {
-                    switchFilter.enable()
-                    tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
-                    tvConnected.setText(R.string.connected)
-                    tvConnected.typeface = Typeface.DEFAULT_BOLD
-                    tvConnected.setTextColor(
+                    binding.switchFilter.enable()
+                    binding.tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
+                    binding.tvConnected.setText(R.string.connected)
+                    binding.tvConnected.typeface = Typeface.DEFAULT_BOLD
+                    binding.tvConnected.setTextColor(
                         resources.getColor(
                             R.color.accent,
                             null
@@ -217,26 +220,26 @@ class MainActivity : ScopeActivity() {
                     android.R.layout.simple_spinner_dropdown_item,
                     equalizations.map { it.name }
                 )
-                spinner.adapter = adapter
+                binding.spinner.adapter = adapter
 
-                spinner.setSelection(currentEqualizationPosition)
+                binding.spinner.setSelection(currentEqualizationPosition)
             })
 
         viewModel.currentEqualizationPosition.observe(
             this,
             { currentEqualizationPosition ->
-                spinner.setSelection(currentEqualizationPosition)
+                binding.spinner.setSelection(currentEqualizationPosition)
             })
     }
 
     private fun initSpinner() {
-        spinner.setOnItemSelected { position ->
+        binding.spinner.setOnItemSelected { position ->
             viewModel.loadEqualization(position)
         }
     }
 
     private fun initBtnSave() {
-        btnSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             if (viewModel.getNumberOfEqualizations() < EqualizationDatasource.Positions.values().size) {
                 val builder = AlertDialog.Builder(this@MainActivity)
                 builder.setTitle(R.string.equalization)
@@ -266,38 +269,38 @@ class MainActivity : ScopeActivity() {
     }
 
     private fun initBtnPresets() {
-        btnPreset1.setOnClickListener {
+        binding.btnPreset1.setOnClickListener {
             viewModel.onBtnPreset1clicked()
         }
-        btnPreset2.setOnClickListener {
+        binding.btnPreset2.setOnClickListener {
             viewModel.onBtnPreset2clicked()
         }
-        btnPreset3.setOnClickListener {
+        binding.btnPreset3.setOnClickListener {
             viewModel.onBtnPreset3clicked()
         }
     }
 
     private fun initBtnDeleteAll() {
-        btnDeleteAll.setOnClickListener {
+        binding.btnDeleteAll.setOnClickListener {
             viewModel.onDeleteAllClicked()
         }
     }
 
     private fun initBtnReset() {
-        btnReset.setOnClickListener {
+        binding.btnReset.setOnClickListener {
             viewModel.resetFaders()
         }
     }
 
     private fun initTvDebugInfo() {
-        tvDebugInfo.setVisibleOrGone(BuildConfig.DEBUG)
+        binding.tvDebugInfo.setVisibleOrGone(BuildConfig.DEBUG)
     }
 
     private fun initSwitchFilter() {
-        switchFilter.setOnCheckedChangeListener { _, filterEnabled ->
+        binding.switchFilter.setOnCheckedChangeListener { _, filterEnabled ->
             if (filterEnabled) {
-                switchFilter.setText(R.string.filter_enabled)
-                switchFilter.typeface = Typeface.DEFAULT_BOLD
+                binding.switchFilter.setText(R.string.filter_enabled)
+                binding.switchFilter.typeface = Typeface.DEFAULT_BOLD
                 //                viewModel.startProcessing()
 
                 val frequencies = viewModel.getFrequencies()
@@ -313,8 +316,8 @@ class MainActivity : ScopeActivity() {
                     text
                 )
             } else {
-                switchFilter.setText(R.string.filter_disabled)
-                switchFilter.typeface = Typeface.DEFAULT
+                binding.switchFilter.setText(R.string.filter_disabled)
+                binding.switchFilter.typeface = Typeface.DEFAULT
                 //                viewModel.stopProcessing()
 
                 AudioProcessorService.stop(this)
@@ -327,7 +330,7 @@ class MainActivity : ScopeActivity() {
         val gains = viewModel.getGains()
         frequencies.forEachIndexed { i, _ ->
             val faderView = FaderView(this)
-            llFaderViews.addView(faderView)
+            binding.llFaderViews.addView(faderView)
             val fader = Fader(
                 faderView,
                 i,

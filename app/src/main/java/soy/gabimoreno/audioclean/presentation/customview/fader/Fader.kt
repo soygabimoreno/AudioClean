@@ -1,7 +1,6 @@
 package soy.gabimoreno.audioclean.presentation.customview.fader
 
 import android.widget.SeekBar
-import kotlinx.android.synthetic.main.custom_fader.view.*
 import soy.gabimoreno.audioclean.domain.ProgressDbMapper
 
 class Fader(
@@ -39,13 +38,20 @@ class Fader(
         faderView.showGain(gain)
         setGain(gain)
         faderView.showMagnitude(frequency)
-        faderView.sb.apply {
-            sb.min = PROGRESS_MIN
-            sb.max = PROGRESS_MAX
+        faderView.binding.sb.apply {
+            faderView.binding.sb.min = PROGRESS_MIN
+            faderView.binding.sb.max = PROGRESS_MAX
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
                     val currentGain = progressDbMapper.getGain(progress)
-                    listener.onGainChanged(i, currentGain)
+                    listener.onGainChanged(
+                        i,
+                        currentGain
+                    )
                     faderView.showGain(currentGain)
                 }
 
@@ -57,11 +63,11 @@ class Fader(
 
     fun setGain(gain: Int) {
         val progress = progressDbMapper.getProgress(gain)
-        faderView.sb.progress = progress
+        faderView.binding.sb.progress = progress
     }
 
     fun getGain(): Int {
-        val progress = faderView.sb.progress
+        val progress = faderView.binding.sb.progress
         return progressDbMapper.getGain(progress)
     }
 }
