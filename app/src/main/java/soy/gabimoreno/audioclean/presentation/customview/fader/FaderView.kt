@@ -11,7 +11,7 @@ class FaderView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : ConstraintLayout(context, attrs) {
 
-    var binding: CustomFaderBinding = CustomFaderBinding.inflate(
+    val binding: CustomFaderBinding = CustomFaderBinding.inflate(
         LayoutInflater.from(context),
         this
     )
