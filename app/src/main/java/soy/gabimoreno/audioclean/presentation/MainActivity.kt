@@ -282,6 +282,9 @@ class MainActivity : ScopeActivity() {
 
     private fun initBtnDeleteAll() {
         binding.btnDeleteAll.setOnClickListener {
+
+            // TODO: Add an alert dialog to confirm the deletion
+
             viewModel.onDeleteAllClicked()
         }
     }

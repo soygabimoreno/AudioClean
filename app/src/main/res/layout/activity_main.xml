@@ -7,35 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@android:layout/simple_list_item_1"/>
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <HorizontalScrollView
         android:id="@+id/nsvPresets"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/llFaderViews"
+        app:layout_constraintBottom_toTopOf="@id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -67,25 +46,45 @@
         </LinearLayout>
     </HorizontalScrollView>
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nsvPresets"
+        tools:listitem="@android:layout/simple_list_item_1"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nsvPresets"/>
+
     <LinearLayout
         android:id="@+id/llFaderViews"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:rotation="-90"
-        app:layout_constraintBottom_toTopOf="@+id/btnDeleteAll"
+        app:layout_constraintBottom_toTopOf="@+id/tvFrequencyAmplitude"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nsvPresets"/>
+        app:layout_constraintTop_toBottomOf="@id/btnSave"/>
 
     <TextView
+        android:id="@+id/tvFrequencyAmplitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/frequency_hz_amplitude_db"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llFaderViews"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnDeleteAll"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/btnDeleteAll"
