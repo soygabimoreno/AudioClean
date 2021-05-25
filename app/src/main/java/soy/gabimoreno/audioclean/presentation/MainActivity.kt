@@ -174,6 +174,7 @@ class MainActivity : ScopeActivity() {
                     )
                         .setTitle(R.string.disconnected_dialog_title)
                         .setMessage(R.string.disconnected_dialog_message)
+                        .setCancelable(false)
                         .show()
                     binding.switchFilter.disable()
                     binding.tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)

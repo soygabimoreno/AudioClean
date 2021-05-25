@@ -16,8 +16,8 @@
     <string name="preset_1">Clear Voice</string>
     <string name="preset_2">Filter Noise</string>
     <string name="preset_3">Pump up the volume</string>
-    <string name="disconnected_dialog_title">Steps</string>
-    <string name="disconnected_dialog_message">1. Close this app\n\n2. Open the other app and start there the meeting\n\n3. Open this app again</string>
+    <string name="disconnected_dialog_title">How to make this work? 😉</string>
+    <string name="disconnected_dialog_message">1. Close this app\n\n2. Open the video conference app and start there the meeting\n\n3. Open this app again\n\nAfter these 3 steps, you should see the label below as \"Connected\". Enjoy! 🎛️</string>
 
     <string name="menu_share">Share the app</string>
     <string name="menu_email">Send an email</string>
