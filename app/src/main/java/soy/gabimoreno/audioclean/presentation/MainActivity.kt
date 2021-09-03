@@ -177,6 +177,7 @@ class MainActivity : ScopeActivity() {
                         .setCancelable(false)
                         .show()
                     binding.switchFilter.disable()
+                    binding.switchFilter.isChecked = false
                     binding.tvConnected.setBackgroundResource(R.drawable.bg_tv_disconnected)
                     binding.tvConnected.setText(R.string.disconnected)
                     binding.tvConnected.typeface = Typeface.DEFAULT
@@ -188,6 +189,7 @@ class MainActivity : ScopeActivity() {
                     )
                 } else {
                     binding.switchFilter.enable()
+                    binding.switchFilter.isChecked = true
                     binding.tvConnected.setBackgroundResource(R.drawable.bg_tv_connected)
                     binding.tvConnected.setText(R.string.connected)
                     binding.tvConnected.typeface = Typeface.DEFAULT_BOLD
