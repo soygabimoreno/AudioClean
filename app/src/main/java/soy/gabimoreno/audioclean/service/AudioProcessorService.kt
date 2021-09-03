@@ -43,7 +43,7 @@ class AudioProcessorService : Service() {
             this,
             0,
             Intent(this, MainActivity::class.java),
-            0
+            PendingIntent.FLAG_IMMUTABLE
         )
         val notification: Notification = NotificationCompat.Builder(this, App.CHANNEL_ID)
             .setContentTitle(getString(R.string.processing_audio))
