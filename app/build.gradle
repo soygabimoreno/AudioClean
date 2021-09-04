@@ -110,7 +110,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics"
     implementation "com.google.firebase:firebase-config-ktx"
 
-    implementation "com.amplitude:android-sdk:2.25.2"
+    implementation "com.amplitude:android-sdk:2.32.1"
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
     testImplementation 'junit:junit:4.13.2'
