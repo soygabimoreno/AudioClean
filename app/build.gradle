@@ -89,7 +89,6 @@ dependencies {
     implementation 'io.insert-koin:koin-androidx-viewmodel:2.2.2'
 
     implementation "io.arrow-kt:arrow-core:$arrow_version"
-    implementation "io.arrow-kt:arrow-syntax:$arrow_version"
     kapt "io.arrow-kt:arrow-meta:$arrow_version"
 
     implementation "com.google.code.gson:gson:2.8.6"
