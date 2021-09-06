@@ -41,8 +41,12 @@ class AudioProcessor(
     private val multiBandCompressorBandCount = nBands
     private val postEqBandCount = nBands
 
-    private lateinit var listener: (audioSessionId: Int) -> Unit
+    private var listener: ((audioSessionId: Int) -> Unit)? = null
     private var initialized = false
+
+    fun setListener(listener: (audioSessionId: Int) -> Unit) {
+        this.listener = listener
+    }
 
     fun init() {
         val builder = Config.Builder(
@@ -58,7 +62,7 @@ class AudioProcessor(
         )
 
         val audioSessionId = getAudioSessionIdUseCase()
-        listener(audioSessionId)
+        listener?.invoke(audioSessionId)
         if (audioSessionId < 0) {
             initialized = false
         } else {
@@ -89,10 +93,6 @@ class AudioProcessor(
             )
             limiter.isEnabled = true
         }
-    }
-
-    fun setListener(listener: (audioSessionId: Int) -> Unit) {
-        this.listener = listener
     }
 
     fun start() {
