@@ -12,3 +12,13 @@ If you want to improve noise reduction or you have audio issues in your video co
 Currently, it is not working yet with Zoom, Microsoft Teams, Webex and Skype. Please, use it in Google Meet.
 
 More info on [AppAcoustiC](http://appacoustic.com/).
+
+### Collaborate
+
+I am [Gabi Moreno](https://gabimoreno.soy).
+
+This is an open source project. **Feel free to request issues**.
+
+And for sure, **Pull Requests are opened** and super-well received.
+
+Thank you very much! 🤗
