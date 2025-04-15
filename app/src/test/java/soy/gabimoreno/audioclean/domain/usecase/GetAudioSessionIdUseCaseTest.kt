@@ -2,6 +2,8 @@ package soy.gabimoreno.audioclean.domain.usecase
 
 import android.media.AudioRecordingConfiguration
 import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertTrue
@@ -50,12 +52,12 @@ class GetAudioSessionIdUseCaseTest {
 
     private fun givenNoActiveSessions() {
         every { getActiveRecordingConfigurationsUseCase() } returns
-            Either.left(GetActiveRecordingConfigurations.NoActiveRecordingConfigurationException)
+            GetActiveRecordingConfigurations.NoActiveRecordingConfigurationException.left()
     }
 
     private fun givenActiveSessions() {
         every { audioRecordingConfigurations[0] } returns audioRecordingConfiguration
-        every { getActiveRecordingConfigurationsUseCase() } returns Either.right(audioRecordingConfigurations)
+        every { getActiveRecordingConfigurationsUseCase() } returns audioRecordingConfigurations.right()
     }
 
     private fun buildGetAudioSessionIdUseCase() =
