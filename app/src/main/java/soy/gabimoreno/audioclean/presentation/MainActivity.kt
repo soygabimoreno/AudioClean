@@ -9,20 +9,30 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import soy.gabimoreno.audioclean.BuildConfig
 import soy.gabimoreno.audioclean.R
 import soy.gabimoreno.audioclean.data.preferences.EqualizationDatasource
 import soy.gabimoreno.audioclean.databinding.ActivityMainBinding
-import soy.gabimoreno.audioclean.framework.extension.*
+import soy.gabimoreno.audioclean.framework.extension.disable
+import soy.gabimoreno.audioclean.framework.extension.enable
+import soy.gabimoreno.audioclean.framework.extension.isFilled
+import soy.gabimoreno.audioclean.framework.extension.setOnItemSelected
+import soy.gabimoreno.audioclean.framework.extension.setVisibleOrGone
+import soy.gabimoreno.audioclean.framework.extension.toast
 import soy.gabimoreno.audioclean.presentation.customview.fader.Fader
 import soy.gabimoreno.audioclean.presentation.customview.fader.FaderView
 import soy.gabimoreno.audioclean.service.AudioProcessorService
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : ScopeActivity() {
 
@@ -35,8 +45,16 @@ class MainActivity : ScopeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            binding.root.updatePadding(
+                top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+                bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            )
+            insets
+        }
         initViewModel()
         initSpinner()
         initBtnSave()
@@ -69,21 +87,25 @@ class MainActivity : ScopeActivity() {
                 share()
                 true
             }
+
             R.id.menuEmail -> {
 //                viewModel.handleEmailClicked()
                 sendEmail()
                 true
             }
+
             R.id.menuRate -> {
 //                viewModel.handleRateClicked()
                 rate()
                 true
             }
+
             R.id.menuInfo -> {
 //                viewModel.handleInfoClicked()
                 navigateToWeb("http://appacoustic.com")
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

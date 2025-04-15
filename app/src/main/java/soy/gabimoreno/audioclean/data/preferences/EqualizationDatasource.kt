@@ -3,11 +3,13 @@ package soy.gabimoreno.audioclean.data.preferences
 import android.content.SharedPreferences
 import arrow.core.Either
 import arrow.core.flatMap
+import arrow.core.right
 import com.google.gson.Gson
 import soy.gabimoreno.audioclean.domain.Equalization
 import soy.gabimoreno.audioclean.framework.extension.fromJson
 import soy.gabimoreno.audioclean.framework.extension.toJSONString
 import soy.gabimoreno.audioclean.framework.extension.unsafeCatch
+import androidx.core.content.edit
 
 class EqualizationDatasource(
     private val sharedPreferences: SharedPreferences
@@ -38,7 +40,7 @@ class EqualizationDatasource(
 
     fun loadAll(): Either<Throwable, List<Equalization>> {
         val list = mutableListOf<Equalization>()
-        Positions.values().forEach {
+        Positions.entries.forEach {
             Either.unsafeCatch {
                 sharedPreferences.getString(it.name, "")
             }.flatMap { jsonString ->
@@ -51,17 +53,17 @@ class EqualizationDatasource(
             }
 
         }
-        return Either.right(list)
+        return list.right()
     }
 
     fun save(equalization: Equalization) {
         run loop@{
-            Positions.values().forEach { equalizationDatasource ->
+            Positions.entries.forEach { equalizationDatasource ->
                 if (sharedPreferences.getString(equalizationDatasource.name, "") == "") {
                     sharedPreferences
-                        .edit()
-                        .putString(equalizationDatasource.name, equalization.toJSONString())
-                        .apply()
+                        .edit() {
+                            putString(equalizationDatasource.name, equalization.toJSONString())
+                        }
                     return@loop
                 }
             }
@@ -70,8 +72,8 @@ class EqualizationDatasource(
 
     fun deleteAll() {
         sharedPreferences
-            .edit()
-            .clear()
-            .apply()
+            .edit() {
+                clear()
+            }
     }
 }

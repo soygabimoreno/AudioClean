@@ -1,0 +1,101 @@
+[versions]
+# Build Tools
+agp = "8.9.1"
+
+# Kotlin & Language Tools
+coroutinesTest = "1.10.1"
+kotlin = "2.1.20"
+ksp = "2.1.20-1.0.31"
+
+# AndroidX Core & UI
+activity = "1.10.1"
+activity-compose = "1.10.1"
+appcompat = "1.7.0"
+arrowCore = "1.2.0"
+browser = "1.8.0"
+compose-bom = "2025.04.00"
+constraintlayout = "2.2.1"
+coreKtx = "1.16.0"
+lifecycle = "2.8.7"
+material = "1.12.0"
+
+# Dependency Injection
+koin = "4.0.2"
+
+# Firebase
+firebaseBom = "33.12.0"
+firebase-crashlytics = "3.0.3"
+google-services = "4.4.2"
+
+# Networking
+okhttp = "4.12.0"
+okhttp-logging = "4.12.0"
+
+# Testing
+coreTesting = "2.2.0"
+espressoCore = "3.6.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+mockk = "1.13.10"
+
+# External Libraries
+amplitude = "3.35.1"
+gson = "2.11.0"
+
+[libraries]
+# AndroidX
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+# Compose
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+
+# Arrow
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrowCore" }
+arrow-optics = { module = "io.arrow-kt:arrow-optics", version.ref = "arrowCore" }
+arrow-optics-ksp-plugin = { module = "io.arrow-kt:arrow-optics-ksp-plugin", version.ref = "arrowCore" }
+
+# Dependency Injection - Koin
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-test = { group = "io.insert-koin", name = "koin-test" }
+
+# Firebase
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-config = { module = "com.google.firebase:firebase-config-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+
+# Google
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Network
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp-logging" }
+
+# External
+amplitude = { group = "com.amplitude", name = "android-sdk", version.ref = "amplitude" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+# Test
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
