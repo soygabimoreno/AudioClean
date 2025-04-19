@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.android)
@@ -33,8 +33,8 @@ android {
         applicationId = "soy.gabimoreno.audioclean"
         minSdk = 24
         targetSdk = 35
-        versionCode = 22
-        versionName = "0.7.3"
+        versionCode = 23
+        versionName = "0.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
